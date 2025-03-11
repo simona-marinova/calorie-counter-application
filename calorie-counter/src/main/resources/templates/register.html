@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <h1>Calorie Counter</h1>
+    <h2>Register Here</h2>
+</header>
+<form th:method="POST" th:action="@{/register}" th:object="${registerRequest}">
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required th:field="*{username}">
+        <p class="alert-warning" th:if="${#fields.hasErrors('username')}" th:errors ="*{username}"></p>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required th:field="*{password}">
+        <p class="alert-warning" th:if="${#fields.hasErrors('password')}" th:errors ="*{password}"></p>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required th:field="*{email}">
+        <p class="alert-warning" th:if="${#fields.hasErrors('email')}" th:errors ="*{email}"></p>
+    </div>
+    <div class="form-group">
+        <label for="country">Country:</label>
+        <select id="country" name="country" required>
+            <option value="">Select Country</option>
+            <option th:each="style : ${T(app.user.model.Country).values()}" th:value="${style}" th:text ="${#strings.capitalize(#strings.toLowerCase(style))}"></option>
+        </select>
+    </div>
+    <button type="submit" class="register-button">Register</button>
+</form>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

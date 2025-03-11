@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Recipe</title>
+    <link rel="stylesheet" href="/css/view-recipe.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/my-recipes}" class="back-to-my-recipes-button">Back to My Recipes</a>
+    <h1>View Recipe</h1>
+</header>
+<main>
+    <div class="view-recipe-container">
+        <div class="form-group">
+            <label>Name:</label>
+            <span th:text="${myRecipe.name}"></span>
+        </div>
+        <div class="form-group">
+            <label>Instructions:</label>
+            <p th:text="${myRecipe.instructions}"></p>
+        </div>
+        <div class="food-items-table">
+            <h2>Food Items</h2>
+            <p th:if="${myRecipe.foodItems == null || myRecipe.foodItems.isEmpty()}">No food items added.</p>
+            <table th:if="${#lists.size(myRecipe.foodItems) > 0}">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Calories</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="foodItem : ${myRecipe.foodItems}">
+                    <td th:text="${foodItem.name}"></td>
+                    <td th:text="${foodItem.quantityInGrams}"></td>
+                    <td th:text="${foodItem.calories}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

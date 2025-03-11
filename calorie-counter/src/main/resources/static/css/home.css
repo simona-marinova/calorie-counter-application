@@ -1,0 +1,108 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFC0CB;
+    color: #9ACD32;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+nav li {
+    display: inline;
+    margin: 0 1rem;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+main {
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+#daily-summary {
+    background: url('https://healthcare.utah.edu/sites/g/files/zrelqx136/files/styles/billboard_tablet/public/media/images/2024/GettyImages-1457889029-healthy%20food.jpg?h=260f8b7a&itok=fsaCoKRs') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#daily-summary p,
+#daily-summary h2,
+#daily-summary span {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+#daily-summary div {
+    margin-bottom: 0.5rem;
+}
+
+#daily-summary p,
+#daily-summary h2,
+#daily-summary span {
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+th, td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #9ACD32;
+    color: #fff;
+}
+
+button,
+.calculate-button,
+.enter-burned-button,
+.logout-button {
+    padding: 0.5rem 1rem;
+    background-color: #9ACD32;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.logout-button {
+    background-color: #FFC0CB;
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+

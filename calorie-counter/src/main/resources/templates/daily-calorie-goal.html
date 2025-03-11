@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Daily Calorie Goal</title>
+    <link rel="stylesheet" href="/css/daily-calorie-goal.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <h1>Calculate Daily Calorie Goal</h1>
+</header>
+<main>
+    <form th:action="@{'/daily-statistics/' + ${id} + '/daily-calorie-goal'}" th:method="POST" th:object="${calculateDailyCalorieGoalRequest}">
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" class="form-control" th:field="*{age}" />
+            <p class="alert-warning" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" th:field="*{gender}" class="form-control">
+                <option value="">Gender:</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+            </select>
+            <p class="alert-warning" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
+        </div>
+        <div class="form-group">
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" class="form-control" th:field="*{height}"  />
+            <p class="alert-warning" th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></p>
+        </div>
+        <div class="form-group">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" class="form-control" th:field="*{weight}" />
+            <p class="alert-warning" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
+        </div>
+        <div class="form-group">
+            <label for="activityLevel">Activity Level:</label>
+            <select id="activityLevel" class="form-control" th:field="*{activityLevel}" >
+                <option value="">Select Activity Level</option>
+                <option value="SEDENTARY">Sedentary (little or no exercise)</option>
+                <option value="MODERATELY_ACTIVE">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                <option value="VERY_ACTIVE">Very active (hard exercise/sports 6-7 days a week)</option>
+            </select>
+            <p class="alert-warning" th:if="${#fields.hasErrors('activityLevel')}" th:errors="*{activityLevel}"></p>
+        </div>
+        <div class="form-group">
+            <label for="weightGoal">Weight Goal:</label>
+            <select id="weightGoal" name="weightGoal" class="form-control" required>
+                <option value="">Select Weight Goal</option>
+                <option th:each="weightGoal : ${T(app.user.model.WeightGoal).values()}" th:value="${weightGoal}" th:text ="${#strings.capitalize(#strings.toLowerCase(weightGoal))}" ></option>
+            </select>
+        </div>
+        <button type="submit">Calculate</button>
+    </form>
+    <div class="result">
+        <h3>Daily Calorie Goal:</h3>
+        <p th:text="${dailyStatistics.dailyCalorieGoal} + ' calories' + dailyStatistics.d"></p>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

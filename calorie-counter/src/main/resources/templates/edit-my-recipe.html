@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+    <link rel="stylesheet" href="/css/edit-my-recipe.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/my-recipes}" class="back-to-my-recipes-button">Back to My Recipes</a>
+    <h1>Edit Recipe</h1>
+</header>
+<main>
+    <div class="edit-recipe-container">
+        <form th:action="@{'/my-recipes/' + ${myRecipe.id} +'/edit'}" th:method="PUT" th:object="${editMyRecipeRequest}">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}" required>
+                <p class="alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+            <div class="form-group">
+                <label for="instructions">Instructions:</label>
+                <textarea id="instructions" th:field="*{instructions}"></textarea>
+                <p class="alert-warning" th:if="${#fields.hasErrors('instructions')}" th:errors="*{instructions}"></p>
+            </div>
+            <button type="submit" class="save-recipe-button">Save Changes</button>
+        </form>
+        <div class="food-items-table">
+            <h2>Food Items</h2>
+            <p th:if="${myRecipe.foodItems == null || myRecipe.foodItems.isEmpty()}">No food items added.</p>
+            <table th:if="${#lists.size(myRecipe.foodItems) > 0}">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Calories</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="foodItem : ${myRecipe.foodItems}">
+                    <td th:text="${foodItem.name}"></td>
+                    <td th:text="${foodItem.quantityInGrams}"></td>
+                    <td th:text="${foodItem.calories}"></td>
+                    <td>
+                        <form th:action="@{'/my-recipes/' + ${myRecipe.id} + '/edit/food-items/' + ${foodItem.id} + '/delete'}" th:method="put">
+                            <input type="hidden" name="_method" value="delete">
+                            <button class="delete-food-item-button">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

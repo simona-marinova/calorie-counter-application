@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Counter - Edit Profile</title>
+    <link rel="stylesheet" href="/css/edit-profile.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <h1>Edit Profile</h1>
+</header>
+<main>
+    <div class="main-content">
+        <div class="edit-profile-container">
+            <form th:action="@{'/users/' + ${user.id} + '/profile'}" th:method="PUT" th:object="${userEditRequest}">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required th:field="*{firstName}">
+                    <p class="alert-warning" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required th:field="*{lastName}">
+                    <p class="alert-warning" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="[User Email]" required th:field="*{email}">
+                    <p class="alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="height">Height (cm):</label>
+                    <input type="number" id="height" name="height" min="0" required th:field="*{height}">
+                    <p class="alert-warning" th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight" name="weight" min="0" required th:field="*{weight}">
+                    <p class="alert-warning" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" min="1" required th:field="*{age}">
+                    <p class="alert-warning" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="activityLevel">Activity Level:</label>
+                    <select id="activityLevel" name="activityLevel" required>
+                        <option value="">Activity Level:</option>
+                        <option th:each="activityLevel : ${T(app.user.model.ActivityLevel).values()}"
+                                th:value="${activityLevel}"
+                                th:text="${#strings.capitalize(#strings.toLowerCase(activityLevel))}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <select id="country" name="country" required>
+                        <option value="">Country:</option>
+                        <option th:each="style : ${T(app.user.model.Country).values()}" th:value="${style}"
+                                th:text="${#strings.capitalize(#strings.toLowerCase(style))}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="weightGoal">Weight Goal:</label>
+                    <select id="weightGoal" name="weightGoal" required>
+                        <option value="">Weight Goal:</option>
+                        <option th:each="weightGoal : ${T(app.user.model.WeightGoal).values()}"
+                                th:value="${weightGoal}"
+                                th:text="${#strings.capitalize(#strings.toLowerCase(weightGoal))}">
+                        </option>
+                    </select>
+                </div>
+
+                <button type="submit" class="save-button">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

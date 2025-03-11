@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe Items To Meal</title>
+    <link rel="stylesheet" href="/css/add-food-and-recipe-items.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/meals}" class="back-to-home-button">Back to Meals</a>
+    <h1>Add Recipe Items To Meal</h1>
+</header>
+<main>
+    <form id="mealForm" th:action="@{'/meals/'+ ${meal.id} + '/add-recipe-items'}" th:method="PUT" th:object="${addRecipeItemRequest}">
+        <div class="form-group">
+            <label for="recipeSelect">Select Recipe:</label>
+            <select th:field="*{recipeItemName}" id="recipeSelect" name="recipeName" class="form-control">
+                <option value="">Select recipe</option>
+                <option th:each="recipe : ${myRecipes}" th:value="${recipe.name}" th:text="${recipe.name}"></option>
+            </select>
+            <p class="alert-warning" th:if="${#fields.hasErrors('recipeItemName')}" th:errors ="*{recipeItemName}"></p>
+        </div>
+        <div class="form-group">
+            <label for="recipeQuantityInput">Add Recipe Quantity (Grams):</label>
+            <input th:field="*{recipeItemQuantity}" type="number" id="recipeQuantityInput" name="recipeQuantity" class="form-control"/>
+            <p class="alert-warning" th:if="${#fields.hasErrors('recipeItemQuantity')}" th:errors ="*{recipeItemQuantity}"></p>
+        </div>
+        <button type="submit" name="action" value="addRecipe">Add Recipe</button>
+    </form>
+    <div>
+        <h2>Added Recipe Items:</h2>
+        <p th:if="${meal.myRecipeItems == null || meal.myRecipeItems.isEmpty()}">No recipe items added.</p>
+        <table th:if="${#lists.size(meal.myRecipeItems) > 0}">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity (Grams)</th>
+                <th>Calories</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="recipeItem : ${meal.myRecipeItems}">
+                <td th:text="${recipeItem.name}"></td>
+                <td th:text="${recipeItem.quantityInGrams}"></td>
+                <td th:text="${recipeItem.calories}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

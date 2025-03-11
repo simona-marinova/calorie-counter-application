@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foods</title>
+    <link rel="stylesheet" href="/css/foods.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <h1>Foods</h1>
+</header>
+<main>
+    <a th:href="@{/foods/new}" class="add-food-button">Add Food</a>
+    <div class="food-container">
+        <div th:each="food : ${foods}" class="food-item">
+            <h2 th:text="${food.name}"></h2>
+            <img th:if="${food.picture}" th:src="${food.picture}" alt="Food Picture" class="food-image">
+            <p>Calories: <span th:text="${food.caloriesPerHundredGrams}"></span></p>
+            <a th:href="@{'/foods/' + ${food.id}}" class="edit-button">Edit Food</a>
+            <form th:action="@{'/foods/' + ${food.id}}" th:method="DELETE">
+                <button class="delete-button">Delete Food</button>
+            </form>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

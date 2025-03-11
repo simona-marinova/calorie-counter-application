@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meals</title>
+    <link rel="stylesheet" href="/css/meals.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <h1>My Meals</h1>
+</header>
+<main>
+    <div class="meals-container">
+        <div th:each="meal : ${meals}" class="meal-section" th:if="${meal.date == today}">
+            <img th:if="${meal.mealType == T(app.meal.model.MealType).BREAKFAST}" th:src="${'https://foolproofliving.com/wp-content/uploads/2023/06/Breakfast-fruit-salad-recipe.jpg'}" alt="Breakfast" class="meal-image">
+            <img th:if="${meal.mealType == T(app.meal.model.MealType).LUNCH}" th:src="${'https://media.istockphoto.com/id/996699224/photo/assorted-indian-food-for-lunch-or-dinner-rice-lentils-paneer-dal-makhani-naan-chutney-spices.jpg?s=612x612&w=0&k=20&c=WjUXTcVnvbeiBJ2H2nNefpjk_B4zXikjkUFG-GhSJ54='}" alt="Lunch" class="meal-image">
+            <img th:if="${meal.mealType == T(app.meal.model.MealType).DINNER}" th:src="${'https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/budget_christmas_dinner_51479_16x9.jpg'}" alt="Dinner" class="meal-image">
+            <img th:if="${meal.mealType == T(app.meal.model.MealType).SNACK}" th:src="${'https://healthyfamilyproject.com/wp-content/uploads/2019/07/web-Ultimate-Family-Snack-Board-landscape-2.jpg'}" alt="Snack" class="meal-image">
+            <h2><span th:text="${#strings.capitalize(#strings.toLowerCase(meal.mealType))}"></span></h2>
+            <p>Date: <span th:text="${#temporals.format(meal.date, 'dd-MM-yyyy')}"></span></p>
+            <p>Calories: <span th:text="${meal.calories}"></span></p>
+            <div class="meal-buttons">
+                <a th:href="@{'/meals/view/' + ${meal.id}}" class="read-meal-button">View Meal</a>
+                <a th:href="@{'/meals/' + ${meal.id} +'/add-food-items'}" class="edit-meal-button">Add Food Items</a>
+                <a th:href="@{'/meals/' + ${meal.id} +'/add-recipe-items'}" class="edit-meal-button">Add Recipe Items</a>
+                <form th:action="@{'/meals/' +'delete/' + ${meal.id}}" th:method="DELETE">
+                    <button class="delete-button">Delete Meal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

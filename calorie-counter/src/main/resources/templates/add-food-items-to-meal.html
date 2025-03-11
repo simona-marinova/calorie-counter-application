@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Food Items To Meal</title>
+    <link rel="stylesheet" href="/css/add-food-and-recipe-items.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/meals}" class="back-to-home-button">Back to Meals</a>
+    <h1>Add Food Items To Meal</h1>
+</header>
+<main>
+    <form id="mealForm" th:action="@{'/meals/'+ ${meal.id} + '/add-food-items'}" th:method="PUT" th:object="${addFoodItemRequest}">
+        <div class="form-group">
+            <label for="foodSelect">Select Food:</label>
+            <select id="foodSelect" name="foodName" class="form-control" th:field="*{foodItemName}">
+                <option value="">Select food:</option>
+                <option th:each="food : ${foods}" th:value="${food.name}" th:text="${food.name}"></option>
+            </select>
+            <p class="alert-warning" th:if="${#fields.hasErrors('foodItemName')}" th:errors ="*{foodItemName}"></p>
+        </div>
+        <div class="form-group">
+            <label for="foodQuantityInput">Add Food Quantity (Grams):</label>
+            <input type="number" id="foodQuantityInput" name="foodQuantity" class="form-control" th:field="*{foodItemQuantity}"/>
+            <p class="alert-warning" th:if="${#fields.hasErrors('foodItemQuantity')}" th:errors ="*{foodItemQuantity}"></p>
+        </div>
+        <button type="submit" name="action" value="addFood">Add Food</button>
+    </form>
+    <div>
+        <h2>Added Food Items:</h2>
+        <p th:if="${meal.foodItems == null || meal.foodItems.isEmpty()}">No food items added.</p>
+        <table th:if="${#lists.size(meal.foodItems) > 0}">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity (Grams)</th>
+                <th>Calories</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="foodItem : ${meal.foodItems}">
+                <td th:text="${foodItem.name}"></td>
+                <td th:text="${foodItem.quantityInGrams}"></td>
+                <td th:text="${foodItem.calories}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

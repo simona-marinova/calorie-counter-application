@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Meal</title>
+    <link rel="stylesheet" href="/css/view-meal.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/meals}" class="back-to-meals-button">Back to Meals</a>
+    <h1>Meal Details</h1>
+</header>
+<main>
+    <div class="meal-details">
+        <p><strong>Meal Type:</strong> <span th:text="${#strings.capitalize(#strings.toLowerCase(meal.mealType))}"></span></p>
+        <p><strong>Date:</strong> <span th:text="${#temporals.format(meal.date, 'dd-MM-yyyy')}"></span></p>
+        <p><strong>Calories:</strong> <span th:text="${meal.calories}"></span></p>
+
+        <h3>Food Items:</h3>
+        <p th:if="${meal.foodItems == null || meal.foodItems.isEmpty()}">No food items added.</p>
+        <table th:if="${#lists.size(meal.foodItems) > 0}">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity (grams)</th>
+                <th>Calories</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="foodItem : ${meal.foodItems}">
+                <td th:text="${#strings.capitalize(foodItem.name)}"></td>
+                <td th:text="${foodItem.quantityInGrams}"></td>
+                <td th:text="${foodItem.calories}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Recipe Items:</h3>
+        <p th:if="${meal.myRecipeItems.isEmpty()}">No recipe items added.</p>
+        <table th:if="${!meal.myRecipeItems.isEmpty()}">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity (grams)</th>
+                <th>Calories</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="recipeItem : ${meal.myRecipeItems}">
+                <td th:text="${#strings.capitalize(recipeItem.name)}"></td>
+                <td th:text="${recipeItem.quantityInGrams}"></td>
+                <td th:text="${recipeItem.calories}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Counter App</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/home}">Home</a></li>
+            <li><a th:href="@{/meals}">Meals</a></li>
+            <li><a href="/my-recipes">My Recipes</a></li>
+            <li><a th:href="@{/foods}">Foods</a></li>
+            <li><a th:href="@{'/users/' + ${user.id} + '/profile'}">Edit Profile</a></li>
+        </ul>
+    </nav>
+    <h1>Calorie Counter</h1>
+    <a th:href="@{/logout}" class="logout-button">Logout</a>
+</header>
+
+<main>
+    <section th:object="${dailyStatistics}" id="daily-summary">
+        <h2>Daily Summary</h2>
+        <div id="calories-consumed">
+            <p>Calories Consumed: <span id="consumed-value" th:text="${dailyStatistics.dailyCaloriesConsumed}"></span></p>
+        </div>
+        <div id="calories-burned">
+            <p>Calories Burned: <span id="burned-value" th:text="${dailyStatistics.getDailyCaloriesBurned}"></span></p>
+        </div>
+        <div id="calories-goal">
+            <p>Calorie Goal: <span id="goal-value" th:text="${dailyStatistics.dailyCalorieGoal}">0</span></p>
+        </div>
+        <div id="calories-remaining">
+            <p>Calories Remaining: <span id="remaining-value" th:text="${dailyStatistics.dailyCaloriesRemaining}"></span></p>
+        </div>
+        </div>
+        <div id="current-weight">
+            <p>Current weight: <span id="weight-value" th:text="${user.weight}"></span></p>
+        </div>
+    </section>
+    <a th:href="@{'/daily-statistics/' + ${dailyStatistics.id} + '/daily-calorie-goal'}" class="calculate-button">Calculate Daily Calorie Goal</a>
+    <a th:href="@{'/daily-statistics/calories-burned'}" class="enter-burned-button">Enter Calories Burned</a>
+    <a th:href="@{'/daily-statistics/weight'}" class="enter-burned-button">Add current weight</a>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
+
+

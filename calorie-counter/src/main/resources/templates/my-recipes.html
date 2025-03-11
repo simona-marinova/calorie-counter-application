@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Recipes</title>
+    <link rel="stylesheet" href="/css/my-recipes.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <h1>My Recipes</h1>
+    <a th:href="@{/my-recipes/new}" class="add-recipe-button">Add Recipe</a>
+</header>
+<main>
+    <div class="recipes-container">
+        <div th:each="myRecipe : ${myRecipes}" class="recipe-item">
+            <h2><span th:text="${myRecipe.name}"></span></h2>
+            <p>All Calories: <span th:text="${myRecipe.allCalories}"></span></p>
+            <p>Calories per 100 grams: <span th:text="${myRecipe.caloriesPerHundredGrams}"></span></p>
+            <a th:href="@{'/my-recipes/' + ${myRecipe.id} +'/add-food-items'}" class="edit-recipe-button">Add Food Items</a>
+            <a th:href="@{'/my-recipes/' + ${myRecipe.id} + '/edit'}" class="edit-recipe-button">Edit Recipe</a>
+            <div class="view-delete-buttons">
+                <a th:href="@{'/my-recipes/' + ${myRecipe.id} + '/view'}" class="read-recipe-button">View Recipe</a>
+                <form th:action="@{'/my-recipes/' + ${myRecipe.id} + '/delete'}" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <button class="delete-recipe-button">Delete Recipe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>
