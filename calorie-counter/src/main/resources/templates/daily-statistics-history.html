@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Statistics History</title>
+    <link rel="stylesheet" href="/css/daily-statistics-history.css">
+    <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <h1>Daily Statistics History</h1>
+</header>
+<main>
+    <div class="statistics-history-container">
+        <h2>Daily Statistics</h2>
+        <table class="statistics-table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Calorie Goal</th>
+                <th>Calories Consumed</th>
+                <th>Calories Burned</th>
+                <th>Weight</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dailyStatistics: ${dailyStatisticsHistory}">
+                <td th:text ="${#temporals.format(dailyStatistics.date, 'dd MMM YYYY')}"></td>
+                <td th:text ="${dailyStatistics.dailyCalorieGoal == 0 ? '-' : dailyStatistics.dailyCalorieGoal}"></td>
+                <td th:text ="${dailyStatistics.dailyCaloriesConsumed == 0 ? '-' : dailyStatistics.dailyCaloriesConsumed}"></td>
+                <td th:text ="${dailyStatistics.dailyCaloriesBurned == 0 ? '-' : dailyStatistics.dailyCaloriesBurned}"></td>
+                <td th:text ="${dailyStatistics.weight == 0 ? '-' : dailyStatistics.weight}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

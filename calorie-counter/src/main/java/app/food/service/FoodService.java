@@ -33,8 +33,8 @@ public class FoodService {
         this.userService = userService;
     }
 
-    public List<Food> getListOfAllFoods() {
-        return foodRepository.findAll();
+    public List<Food> getListOfAllFoodsForUserId(UUID userId) {
+        return foodRepository.findAllByUserId(userId);
     }
 
     public void createNewFood(CreateFoodRequest createFoodRequest, User user) {

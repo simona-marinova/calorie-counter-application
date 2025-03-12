@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class DailyStatisticsService {
@@ -78,6 +81,7 @@ public class DailyStatisticsService {
         DailyStatistics dailyStatistics = getDailyStatisticsByDateAndUserId(LocalDate.now(), user.getId());
         dailyStatistics.setDailyCalorieGoal(dailyCalorieGoal);
         calculateRemainingCalories(user.getId(), dailyStatistics);
+        dailyStatistics.setDailyCaloriesBurned(basalMetabolicRate);
         dailyStatisticsRepository.save(dailyStatistics);
     }
 
@@ -90,7 +94,7 @@ public class DailyStatisticsService {
 
         double caloriesBurned = caloriesBurnedRequest.getDailyCaloriesBurned();
         dailyStatistics.setDailyCaloriesBurned(dailyStatistics.getDailyCaloriesBurned() + caloriesBurned);
-        calculateRemainingCalories(userId, dailyStatistics);
+      //  calculateRemainingCalories(userId, dailyStatistics);
         dailyStatisticsRepository.save(dailyStatistics);
     }
 
@@ -176,5 +180,9 @@ public class DailyStatisticsService {
     public void lowerCaloriesConsumed(UUID userId, DailyStatistics dailyStatistics, double calories) {
         dailyStatistics.setDailyCaloriesConsumed(dailyStatistics.getDailyCaloriesConsumed() - calories);
         dailyStatisticsRepository.save(dailyStatistics);
+    }
+
+    public List<DailyStatistics> getDailyStatisticsHistory(UUID userId) {
+          return dailyStatisticsRepository.findAllByUserIdOrderByDateDesc(userId).stream().limit(14).toList();
     }
 }

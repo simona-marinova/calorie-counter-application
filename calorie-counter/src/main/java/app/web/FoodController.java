@@ -57,10 +57,10 @@ public class FoodController {
     }
 
     @GetMapping("")
-    public ModelAndView readFoods() {
+    public ModelAndView readFoods(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("foods");
-        List<Food> foods=foodService.getListOfAllFoods();
+        List<Food> foods=foodService.getListOfAllFoodsForUserId(authenticationDetails.getUserId());
         modelAndView.addObject("foods", foods);
         return modelAndView;
     }

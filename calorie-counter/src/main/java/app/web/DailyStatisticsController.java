@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -35,7 +36,7 @@ public class DailyStatisticsController {
     }
 
     @GetMapping("/calories-burned")
-    public ModelAndView addBurnedCalories (@AuthenticationPrincipal AuthenticationDetails authenticationDetails){
+    public ModelAndView addBurnedCalories(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getById(authenticationDetails.getUserId());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("calories-burned");
@@ -45,19 +46,19 @@ public class DailyStatisticsController {
     }
 
     @PostMapping("/calories-burned")
-    public String processCaloriesBurnedRequest(@AuthenticationPrincipal AuthenticationDetails authenticationDetails,  @Valid CaloriesBurnedRequest caloriesBurnedRequest, BindingResult bindingResult) {
+    public String processCaloriesBurnedRequest(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid CaloriesBurnedRequest caloriesBurnedRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "calories-burned";
         }
         User user = userService.getById(authenticationDetails.getUserId());
 
-        dailyStatisticsService.updateCaloriesBurned(authenticationDetails.getUserId(),caloriesBurnedRequest);
+        dailyStatisticsService.updateCaloriesBurned(authenticationDetails.getUserId(), caloriesBurnedRequest);
 
         return "redirect:/home";
     }
 
     @GetMapping("/{id}/daily-calorie-goal")
-    public ModelAndView calculateDailyCalorieGoal (@PathVariable UUID id){
+    public ModelAndView calculateDailyCalorieGoal(@PathVariable UUID id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("daily-calorie-goal");
         DailyStatistics dailyStatistics = dailyStatisticsService.getById(id);
@@ -85,7 +86,7 @@ public class DailyStatisticsController {
 
 
     @GetMapping("/weight")
-    public ModelAndView addCurrentWeight (@AuthenticationPrincipal AuthenticationDetails authenticationDetails){
+    public ModelAndView addCurrentWeight(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getById(authenticationDetails.getUserId());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-current-weight");
@@ -95,14 +96,24 @@ public class DailyStatisticsController {
     }
 
     @PostMapping("/weight")
-    public String processCurrentWeightRequest(@AuthenticationPrincipal AuthenticationDetails authenticationDetails,  @Valid CurrentWeightRequest currentWeightRequest, BindingResult bindingResult) {
+    public String processCurrentWeightRequest(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid CurrentWeightRequest currentWeightRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "add-current-weight";
         }
         User user = userService.getById(authenticationDetails.getUserId());
 
-        dailyStatisticsService.updateCurrentWeight(authenticationDetails.getUserId(),currentWeightRequest);
+        dailyStatisticsService.updateCurrentWeight(authenticationDetails.getUserId(), currentWeightRequest);
 
         return "redirect:/home";
     }
+
+    @GetMapping("/history")
+    public ModelAndView showDailyStatisticsHistory(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("daily-statistics-history");
+        List<DailyStatistics> dailyStatisticsHistory = dailyStatisticsService.getDailyStatisticsHistory(authenticationDetails.getUserId());
+        modelAndView.addObject("dailyStatisticsHistory", dailyStatisticsHistory);
+        return modelAndView;
+    }
+
 }

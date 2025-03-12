@@ -60,7 +60,7 @@ public class MealController {
         modelAndView.setViewName("add-food-items-to-meal");
         modelAndView.addObject("meal", meal);
         modelAndView.addObject("addFoodItemRequest", new AddFoodItemRequest());
-        List<Food> foods = foodService.getListOfAllFoods();
+        List<Food> foods = foodService.getListOfAllFoodsForUserId(authenticationDetails.getUserId());
         modelAndView.addObject("foods", foods);
         return modelAndView;
     }
@@ -74,7 +74,7 @@ public class MealController {
             modelAndView.setViewName("add-food-items-to-meal");
             modelAndView.addObject("meal", meal);
             modelAndView.addObject("addFoodItemRequest", addFoodItemRequest);
-            List<Food> foods = foodService.getListOfAllFoods();
+            List<Food> foods = foodService.getListOfAllFoodsForUserId(authenticationDetails.getUserId());
             modelAndView.addObject("foods", foods);
             return modelAndView;
         }

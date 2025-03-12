@@ -71,11 +71,11 @@ public class MyRecipeController {
 
 
     @GetMapping("/{id}/add-food-items")
-    public ModelAndView addFoodItemsToRecipe(@PathVariable UUID id) {
+    public ModelAndView addFoodItemsToRecipe(@PathVariable UUID id,@AuthenticationPrincipal AuthenticationDetails authenticationDetails ) {
         MyRecipe myRecipe = myRecipeService.getById(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-food-items-to-recipe");
-        List<Food> foods = foodService.getListOfAllFoods();
+        List<Food> foods = foodService.getListOfAllFoodsForUserId(authenticationDetails.getUserId());
         modelAndView.addObject("foods", foods);
         modelAndView.addObject("addFoodItemRequest", new AddFoodItemRequest());
         modelAndView.addObject("myRecipe", myRecipe);
@@ -88,7 +88,7 @@ public class MyRecipeController {
             MyRecipe myRecipe = myRecipeService.getById(id);
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("add-food-items-to-recipe");
-            List<Food> foods = foodService.getListOfAllFoods();
+            List<Food> foods = foodService.getListOfAllFoodsForUserId(authenticationDetails.getUserId());
             modelAndView.addObject("foods", foods);
             modelAndView.addObject("addFoodItemRequest", addFoodItemRequest);
             modelAndView.addObject("myRecipe", myRecipe);
