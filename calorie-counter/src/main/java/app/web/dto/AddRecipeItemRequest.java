@@ -15,4 +15,6 @@ public class AddRecipeItemRequest {
     @NotNull(message = "Recipe item quantity cannot be null")
     @Positive(message = "Recipe item quantity must be a positive number")
     private double recipeItemQuantity;
+
+
 }

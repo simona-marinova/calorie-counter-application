@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Recipes</title>
+    <link rel="stylesheet" href="/css/public-recipes.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <h1>Public Recipes</h1>
+</header>
+<main>
+    <div class="recipes-container">
+        <div th:each="recipe : ${publicRecipes}" class="recipe-item">
+            <h2><span th:text="${recipe.name}"></span></h2>
+            <p>Calories per 100 grams: <span th:text="${recipe.caloriesPerHundredGrams}"></span></p>
+            <p>All Calories: <span th:text="${recipe.allCalories}"></span></p>
+            <p>Instructions: <span th:text="${recipe.instructions}"></span></p>
+            <h3>Food Items:</h3>
+            <table class="food-items-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity (g)</th>
+                    <th>Calories</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="foodItem : ${recipe.foodItems}">
+                    <td th:text="${foodItem.name}"></td>
+                    <td th:text="${foodItem.quantityInGrams}"></td>
+                    <td th:text="${foodItem.calories}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

@@ -34,6 +34,9 @@ public class MyRecipe {
     @Column
     private double allCalories;
 
+    @Column
+    boolean recipePublic;
+
     @ManyToOne
     private User user;
 

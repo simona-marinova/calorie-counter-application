@@ -10,7 +10,6 @@ body {
     min-height: 100vh;
 }
 
-
 main {
     padding: 2rem;
     flex: 1;
@@ -27,13 +26,12 @@ main {
     width: 80%;
 }
 
-
 a {
     color: white;
     text-decoration: none;
 }
 
-.add-recipe-button {
+.add-recipe-button, .recipe-suggestions-button {
     display: inline-block;
     padding: 8px 16px;
     background-color: #FFB6C1;
@@ -43,8 +41,8 @@ a {
     margin-top: 10px;
 }
 
-.add-recipe-button:hover {
-    background-color: #FF69B4;
+.add-recipe-button:hover, .recipe-suggestions-button:hover {
+    background-color: #FFC0CB;
 }
 
 .recipe-item {
@@ -71,7 +69,6 @@ a {
 .edit-recipe-button:hover, .read-recipe-button:hover {
     background-color: #82B12F;
 }
-
 
 .add-recipe-button {
     display: inline-block;
@@ -108,3 +105,8 @@ a {
     cursor: pointer;
 }
 
+.recipe-suggestions-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}

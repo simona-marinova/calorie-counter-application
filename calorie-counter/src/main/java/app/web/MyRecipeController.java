@@ -39,10 +39,10 @@ public class MyRecipeController {
 
 
     @GetMapping("")
-    public ModelAndView viewMyRecipes() {
+    public ModelAndView viewMyRecipes(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("my-recipes");
-        List<MyRecipe> myRecipes = myRecipeService.getAllRecipes();
+        List<MyRecipe> myRecipes = myRecipeService.getAllRecipesByUserId(authenticationDetails.getUserId());
         modelAndView.addObject("myRecipes", myRecipes);
         return modelAndView;
     }
@@ -129,7 +129,6 @@ public class MyRecipeController {
 
     }
 
-
     @GetMapping("/{id}/view")
     public ModelAndView viewRecipe(@PathVariable UUID id) {
         MyRecipe myRecipe = myRecipeService.getById(id);
@@ -154,5 +153,15 @@ public class MyRecipeController {
         myRecipeService.deleteMyRecipe(id);
         return "redirect:/my-recipes";
     }
+
+    @GetMapping("/public-recipes")
+    public ModelAndView viewPublicRecipes(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("public-recipes");
+        List<MyRecipe> publicRecipes = myRecipeService.getAllPublicRecipes(authenticationDetails.getUserId());
+        modelAndView.addObject("publicRecipes", publicRecipes);
+        return modelAndView;
+    }
+
 
 }

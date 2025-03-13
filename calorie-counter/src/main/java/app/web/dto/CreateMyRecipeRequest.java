@@ -1,6 +1,7 @@
 package app.web.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -14,4 +15,7 @@ public class CreateMyRecipeRequest {
 
     @Size(max = 1000, message = "Instructions cannot exceed 1000 characters")
     private String instructions;
+
+    @NotNull(message = "Please choose whether the recipe is public or not")
+    private boolean recipePublic;
 }

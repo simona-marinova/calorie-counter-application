@@ -16,6 +16,7 @@ import app.web.dto.CreateMyRecipeRequest;
 import app.web.dto.EditMyRecipeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,10 +65,6 @@ public class MyRecipeService {
     }
 
 
-    public List<MyRecipe> getAllRecipes() {
-        return myRecipeRepository.findAll();
-    }
-
     public MyRecipe getByUserIdAndName(UUID userId, String name) {
         return myRecipeRepository.findByUserIdAndName(userId, name).orElseThrow(() -> new DomainException("Recipe with id [%s] does not exist.".formatted(name)));
     }
@@ -87,6 +84,7 @@ public class MyRecipeService {
                 .instructions(createMyRecipeRequest.getInstructions())
                 .user(user)
                 .foodItems(new ArrayList<>())
+                .recipePublic(createMyRecipeRequest.isRecipePublic())
                 .build();
 
         myRecipeRepository.save(myRecipe);
@@ -150,5 +148,17 @@ public class MyRecipeService {
         return myRecipeRepository.findById(id).orElseThrow(() -> new DomainException("Recipe with id [%s] does not exist.".formatted(id)));
 
     }
+
+    public List<MyRecipe> getAllPublicRecipes(UUID userId) {
+        return myRecipeRepository.findAllByRecipePublic(true)
+                .stream()
+                .filter(r->!r.getUser().getId().equals(userId)).toList();
+    }
+
+    public List<MyRecipe> getAllRecipesByUserId(UUID userId) {
+        return myRecipeRepository.findAllByUserId(userId);
+    }
+
+
 }
 
