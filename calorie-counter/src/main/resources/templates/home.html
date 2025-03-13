@@ -17,6 +17,7 @@
             <li><a th:href="@{/foods}">Foods</a></li>
             <li><a th:href="@{'/users/' + ${user.id} + '/profile'}">Edit Profile</a></li>
             <li><a th:href="@{'/daily-statistics/history'}">Daily Statistics History</a></li>
+            <li><a th:href="@{'/users'}" th:if="${user.userRole.name() =='ADMIN'}">Users</a></li>
         </ul>
     </nav>
     <h1>Calorie Counter</h1>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - User Management</title>
+    <link rel="stylesheet" href="/css/users.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <h1>Admin - User Management</h1>
+</header>
+<main>
+    <div class="users-container">
+        <div th:each="user : ${users}" class="user-item">
+            <h2><span th:text="${user.username}"></span></h2>
+            <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+            <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+            <p><strong>First Name:</strong> <span th:text="${user.firstName}"></span></p>
+            <p><strong>Last Name:</strong> <span th:text="${user.lastName}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+            <p><strong>Height:</strong> <span th:text="${user.height}"></span></p>
+            <p><strong>Weight:</strong> <span th:text="${user.weight}"></span></p>
+            <p><strong>Age:</strong> <span th:text="${user.age}"></span></p>
+            <p><strong>Gender:</strong> <span th:text="${user.gender}"></span></p>
+            <p><strong>Activity Level:</strong> <span th:text="${user.activityLevel}"></span></p>
+            <p><strong>Country:</strong> <span th:text="${user.country}"></span></p>
+            <p><strong>Weight Goal:</strong> <span th:text="${user.weightGoal}"></span></p>
+            <p><strong>Active:</strong> <span th:text="${user.isActive}"></span></p>
+            <p><strong>User role:</strong> <span th:text="${user.userRole}"></span></p>
+            <p><strong>Created On:</strong> <span th:text="${#temporals.format(user.createdOn, 'dd-MM-yyyy HH:mm:ss')}"></span></p>
+            <p><strong>Updated On:</strong> <span th:text="${#temporals.format(user.updatedOn, 'dd-MM-yyyy HH:mm:ss')}"></span></p>
+            <form th:action="@{'/users/' + ${user.id} + '/role'}" th:method="PUT">
+                <button type="submit" name="action" value="changeRole">Change Role</button>
+            </form>
+
+            <form th:action="@{'/users/' + ${user.id} + '/status'}" th:method="PUT">
+                <button type="submit" name="action" value="changeStatus">Change Status</button>
+            </form>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Admin Panel. All rights reserved.</p>
+</footer>
+</body>
+</html>

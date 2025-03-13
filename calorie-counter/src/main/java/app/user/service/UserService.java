@@ -10,6 +10,7 @@ import app.web.dto.UserEditRequest;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -102,6 +103,24 @@ public class UserService implements UserDetailsService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+
+    public void changeRole(UUID userId) {
+        User user = getById(userId);
+        if(user.getUserRole()==UserRole.USER) {
+            user.setUserRole(UserRole.ADMIN);
+        }
+        else {
+            user.setUserRole(UserRole.USER);
+        }
+        userRepository.save(user);
+    }
+
+    public void changeStatus(UUID userId) {
+        User user = getById(userId);
+        user.setActive(!user.isActive());
+        userRepository.save(user);
     }
 }
 
