@@ -108,10 +108,9 @@ public class UserService implements UserDetailsService {
 
     public void changeRole(UUID userId) {
         User user = getById(userId);
-        if(user.getUserRole()==UserRole.USER) {
+        if (user.getUserRole() == UserRole.USER) {
             user.setUserRole(UserRole.ADMIN);
-        }
-        else {
+        } else {
             user.setUserRole(UserRole.USER);
         }
         userRepository.save(user);
@@ -121,6 +120,10 @@ public class UserService implements UserDetailsService {
         User user = getById(userId);
         user.setActive(!user.isActive());
         userRepository.save(user);
+    }
+
+    public List<User> getAllActiveUsers() {
+        return userRepository.findAll().stream().filter(User::isActive).toList();
     }
 }
 

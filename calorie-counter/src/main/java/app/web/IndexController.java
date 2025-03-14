@@ -87,7 +87,7 @@ public class IndexController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
-        mealService.createMealsForTheDay(user.getId());
+      mealService.createMealsForTheDay(user.getId());
         LocalDate today = LocalDate.now();
         List<Meal> meals = mealService.getMealsByUserIdAndDate(user.getId(), today);
         modelAndView.addObject("meals", meals);

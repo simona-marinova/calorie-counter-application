@@ -17,8 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @Service
 public class DailyStatisticsService {
@@ -80,7 +79,7 @@ public class DailyStatisticsService {
 
         DailyStatistics dailyStatistics = getDailyStatisticsByDateAndUserId(LocalDate.now(), user.getId());
         dailyStatistics.setDailyCalorieGoal(dailyCalorieGoal);
-        calculateRemainingCalories(user.getId(), dailyStatistics);
+        //  calculateRemainingCalories(user.getId(), dailyStatistics);
         dailyStatistics.setDailyCaloriesBurned(basalMetabolicRate);
         dailyStatisticsRepository.save(dailyStatistics);
     }
@@ -92,9 +91,9 @@ public class DailyStatisticsService {
 
         DailyStatistics dailyStatistics = getDailyStatisticsByDateAndUserId(LocalDate.now(), userId);
 
-        double caloriesBurned = caloriesBurnedRequest.getDailyCaloriesBurned();
+        double caloriesBurned = caloriesBurnedRequest.getCaloriesBurned();
         dailyStatistics.setDailyCaloriesBurned(dailyStatistics.getDailyCaloriesBurned() + caloriesBurned);
-      //  calculateRemainingCalories(userId, dailyStatistics);
+        //  calculateRemainingCalories(userId, dailyStatistics);
         dailyStatisticsRepository.save(dailyStatistics);
     }
 
@@ -129,10 +128,11 @@ public class DailyStatisticsService {
             dailyStatistics.setDate(today);
             dailyStatistics.setUser(user);
             dailyStatistics.setDailyCaloriesBurned(0.00);
+            dailyStatistics.setDailyCaloriesRemaining(0.00);
             dailyStatistics.setDailyCaloriesConsumed(0.00);
             LocalDate yesterday = today.minusDays(1);
             Optional<DailyStatistics> optionalDailyStatisticsYesterday = dailyStatisticsRepository.findByDateAndUserId(yesterday, userId);
-            if (optionalDailyStatisticsYesterday.isPresent() && optionalDailyStatisticsYesterday.get().getDailyCalorieGoal()!=0.00) {
+            if (optionalDailyStatisticsYesterday.isPresent() && optionalDailyStatisticsYesterday.get().getDailyCalorieGoal() != 0.00) {
                 dailyStatistics.setDailyCalorieGoal(optionalDailyStatisticsYesterday.get().getDailyCalorieGoal());
                 dailyStatistics.setDailyCaloriesRemaining(optionalDailyStatisticsYesterday.get().getDailyCalorieGoal());
             }
@@ -147,15 +147,15 @@ public class DailyStatisticsService {
     public void updateConsumedAndRemainingCalories(double calories, UUID userId) {
         User user = userService.getById(userId);
         DailyStatistics dailyStatistics = getDailyStatisticsByDateAndUserId(LocalDate.now(), userId);
-        dailyStatistics.setDailyCaloriesConsumed(dailyStatistics.getDailyCaloriesConsumed() + calories);
-        double dailyCaloriesRemaining = (dailyStatistics.getDailyCalorieGoal() + dailyStatistics.getDailyCaloriesBurned()) - dailyStatistics.getDailyCaloriesConsumed();
+        double caloriesToAdd = Math.round(dailyStatistics.getDailyCaloriesConsumed() + calories) * 100;
+        dailyStatistics.setDailyCaloriesConsumed(caloriesToAdd / 100);
+        double dailyCaloriesRemaining = dailyStatistics.getDailyCalorieGoal() - dailyStatistics.getDailyCaloriesConsumed();
         if (dailyCaloriesRemaining < 0) {
             dailyCaloriesRemaining = 0;
         }
         dailyStatistics.setDailyCaloriesRemaining(dailyCaloriesRemaining);
 
         dailyStatisticsRepository.save(dailyStatistics);
-
     }
 
     public void updateCurrentWeight(UUID userId, CurrentWeightRequest currentWeightRequest) {
@@ -183,6 +183,6 @@ public class DailyStatisticsService {
     }
 
     public List<DailyStatistics> getDailyStatisticsHistory(UUID userId) {
-          return dailyStatisticsRepository.findAllByUserIdOrderByDateDesc(userId).stream().limit(14).toList();
+        return dailyStatisticsRepository.findAllByUserIdOrderByDateDesc(userId).stream().limit(14).toList();
     }
 }

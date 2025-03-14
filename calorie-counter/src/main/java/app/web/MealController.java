@@ -89,8 +89,9 @@ public class MealController {
         modelAndView.setViewName("add-recipe-items-to-meal");
         modelAndView.addObject("meal", meal);
         modelAndView.addObject("addRecipeItemRequest", new AddRecipeItemRequest());
-        List<MyRecipe> myRecipes = myRecipeService.getListOfAllRecipes();
+        List<MyRecipe> myRecipes = myRecipeService.getAllRecipesByUserIdAndCaloriesNotZero(authenticationDetails.getUserId());
         modelAndView.addObject("myRecipes", myRecipes);
+
         return modelAndView;
     }
 
@@ -107,7 +108,6 @@ public class MealController {
             modelAndView.addObject("myRecipes", myRecipes);
             return modelAndView;
         }
-        User user = userService.getById(authenticationDetails.getUserId());
         mealService.addRecipeItemsToMeal(addRecipeItemRequest, authenticationDetails.getUserId(), id);
         return new ModelAndView("redirect:/meals/{id}/add-recipe-items");
     }

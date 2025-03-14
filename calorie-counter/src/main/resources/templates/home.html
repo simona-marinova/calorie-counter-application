@@ -17,6 +17,7 @@
             <li><a th:href="@{/foods}">Foods</a></li>
             <li><a th:href="@{'/users/' + ${user.id} + '/profile'}">Edit Profile</a></li>
             <li><a th:href="@{'/daily-statistics/history'}">Daily Statistics History</a></li>
+            <li><a th:href="@{'/activities'}">Activities</a></li>
             <li><a th:href="@{'/users'}" th:if="${user.userRole.name() =='ADMIN'}">Users</a></li>
         </ul>
     </nav>
@@ -45,7 +46,7 @@
         </div>
     </section>
     <a th:href="@{'/daily-statistics/' + ${dailyStatistics.id} + '/daily-calorie-goal'}" class="calculate-button">Calculate Daily Calorie Goal</a>
-    <a th:href="@{'/daily-statistics/calories-burned'}" class="enter-burned-button">Enter Calories Burned</a>
+    <a th:href="@{'/activities/new'}" class="enter-burned-button">Add Activity</a>
     <a th:href="@{'/daily-statistics/weight'}" class="enter-burned-button">Add current weight</a>
 </main>
 <footer>

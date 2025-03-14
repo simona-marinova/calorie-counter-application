@@ -6,7 +6,6 @@ import app.security.AuthenticationDetails;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.CalculateDailyCalorieGoalRequest;
-import app.web.dto.CaloriesBurnedRequest;
 import app.web.dto.CurrentWeightRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,27 +34,7 @@ public class DailyStatisticsController {
         this.dailyStatisticsService = dailyStatisticsService;
     }
 
-    @GetMapping("/calories-burned")
-    public ModelAndView addBurnedCalories(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-        User user = userService.getById(authenticationDetails.getUserId());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("calories-burned");
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("caloriesBurnedRequest", new CaloriesBurnedRequest());
-        return modelAndView;
-    }
 
-    @PostMapping("/calories-burned")
-    public String processCaloriesBurnedRequest(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, @Valid CaloriesBurnedRequest caloriesBurnedRequest, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "calories-burned";
-        }
-        User user = userService.getById(authenticationDetails.getUserId());
-
-        dailyStatisticsService.updateCaloriesBurned(authenticationDetails.getUserId(), caloriesBurnedRequest);
-
-        return "redirect:/home";
-    }
 
     @GetMapping("/{id}/daily-calorie-goal")
     public ModelAndView calculateDailyCalorieGoal(@PathVariable UUID id) {
@@ -81,7 +60,7 @@ public class DailyStatisticsController {
         User user = userService.getById(dailyStatistics.getUser().getId());
         dailyStatisticsService.calculateCalorieGoal(calculateDailyCalorieGoalRequest, user);
 
-        return new ModelAndView("redirect:/home");
+        return new ModelAndView("redirect:daily-calorie-goal");
     }
 
 

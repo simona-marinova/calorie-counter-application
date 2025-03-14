@@ -22,6 +22,14 @@
             <label>Instructions:</label>
             <p th:text="${myRecipe.instructions}"></p>
         </div>
+        <div class="form-group">
+            <label>Calories per 100 grams:</label>
+            <span th:text="${myRecipe.caloriesPerHundredGrams}"></span>
+        </div>
+        <div class="form-group">
+            <label>All Calories:</label>
+            <span th:text="${myRecipe.allCalories}"></span>
+        </div>
         <div class="food-items-table">
             <h2>Food Items</h2>
             <p th:if="${myRecipe.foodItems == null || myRecipe.foodItems.isEmpty()}">No food items added.</p>

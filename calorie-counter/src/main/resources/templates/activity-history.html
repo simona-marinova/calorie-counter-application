@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity History</title>
+  <link rel="stylesheet" href="/css/activity-history.css">
+  <link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+<header>
+  <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+  <h1>Activity History</h1>
+</header>
+<main>
+  <div class="statistics-history-container">
+    <table>
+      <thead>
+      <tr>
+        <th>Activity Type</th>
+        <th>Duration (minutes)</th>
+        <th>Calories Burned</th>
+        <th>Created On</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="activity : ${list}">
+        <td th:text ="${#strings.capitalize(#strings.toLowerCase(activity.activityType))}"></td>
+        <td th:text="${activity.duration}"></td>
+        <td th:text="${activity.caloriesBurned}"></td>
+        <td th:text="${activity.createdOn}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+<footer>
+      <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

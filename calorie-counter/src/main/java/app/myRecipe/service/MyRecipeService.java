@@ -16,7 +16,6 @@ import app.web.dto.CreateMyRecipeRequest;
 import app.web.dto.EditMyRecipeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +52,10 @@ public class MyRecipeService {
         MyRecipeItem myRecipeItem = new MyRecipeItem();
         myRecipeItem.setName(addRecipeItemRequest.getRecipeItemName());
         myRecipeItem.setQuantityInGrams(addRecipeItemRequest.getRecipeItemQuantity());
-        double myRecipeCalories = getMyRecipeCalories(userId, myRecipeItem);
-        double myRecipeItemCalories = myRecipeCalories / 100 * myRecipeItem.getQuantityInGrams();
-        myRecipeItem.setCalories(myRecipeItemCalories);
+        MyRecipe myRecipe = getByUserIdAndName(userId, addRecipeItemRequest.getRecipeItemName());
+        double myRecipeCaloriesPerHundredGrams = myRecipe.getCaloriesPerHundredGrams();
+        double myRecipeItemCalories = Math.round(myRecipeCaloriesPerHundredGrams * addRecipeItemRequest.getRecipeItemQuantity())*100;
+        myRecipeItem.setCalories(myRecipeItemCalories/100);
         User user = userService.getById(userId);
         myRecipeItem.setUser(user);
         myRecipeItem.setMeal(meal);
@@ -92,7 +92,6 @@ public class MyRecipeService {
     }
 
 
-
     public void addFoodItemToRecipe(AddFoodItemRequest addFoodItemRequest, User user, MyRecipe myRecipe) {
 
         FoodItem foodItem = foodService.createNewFoodItemForRecipe(addFoodItemRequest, user.getId(), myRecipe);
@@ -104,8 +103,7 @@ public class MyRecipeService {
         foodItems.add(foodItem);
         myRecipe.setFoodItems(foodItems);
         myRecipe.setAllCalories(myRecipe.getAllCalories() + foodItem.getCalories());
-
-
+        myRecipe.setCaloriesPerHundredGrams(calculateCaloriesPer100Grams(myRecipe));
         myRecipeRepository.save(myRecipe);
     }
 
@@ -133,6 +131,33 @@ public class MyRecipeService {
         myRecipeRepository.save(myRecipe);
     }
 
+
+    public double calculateCaloriesPer100Grams(MyRecipe recipe) {
+        if (recipe.getFoodItems() == null || recipe.getFoodItems().isEmpty()) {
+            return 0.0;
+        }
+
+        double totalWeight = recipe.getFoodItems().stream()
+                .mapToDouble(FoodItem::getQuantityInGrams)
+                .sum();
+
+        double totalCalories = recipe.getFoodItems().stream()
+                .mapToDouble(FoodItem::getCalories)
+                .sum();
+
+        // Calculation of weight loss during cooking
+        totalWeight = totalWeight - totalWeight * 0.10;
+
+        if (totalWeight <= 0) {
+            return 0.0;
+        }
+
+        double calories = Math.round(totalCalories / totalWeight * 100);
+
+        return calories / 100;
+    }
+
+
     public void deleteMyRecipe(UUID id) {
         List<FoodItem> foodItems = foodService.getFoodItemsByRecipeId(id);
         if (!foodItems.isEmpty()) {
@@ -152,13 +177,16 @@ public class MyRecipeService {
     public List<MyRecipe> getAllPublicRecipes(UUID userId) {
         return myRecipeRepository.findAllByRecipePublic(true)
                 .stream()
-                .filter(r->!r.getUser().getId().equals(userId)).toList();
+                .filter(r -> !r.getUser().getId().equals(userId)).toList();
     }
 
     public List<MyRecipe> getAllRecipesByUserId(UUID userId) {
         return myRecipeRepository.findAllByUserId(userId);
     }
 
+    public List<MyRecipe> getAllRecipesByUserIdAndCaloriesNotZero(UUID userId) {
+        return myRecipeRepository.findAllByUserId(userId).stream().filter(r -> r.getCaloriesPerHundredGrams() != 0.00).toList();
+    }
 
 }
 
