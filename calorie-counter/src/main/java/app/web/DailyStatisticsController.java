@@ -5,7 +5,7 @@ import app.dailyStatistics.service.DailyStatisticsService;
 import app.security.AuthenticationDetails;
 import app.user.model.User;
 import app.user.service.UserService;
-import app.web.dto.CalculateDailyCalorieGoalRequest;
+import app.web.dto.CalculateCalorieRequest;
 import app.web.dto.CurrentWeightRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +36,18 @@ public class DailyStatisticsController {
 
 
 
-    @GetMapping("/{id}/daily-calorie-goal")
-    public ModelAndView calculateDailyCalorieGoal(@PathVariable UUID id) {
+    @GetMapping("/{id}/calorie-goal-and-calories-at-rest")
+    public ModelAndView calculateCalorieGoalAndCaloriesAtRest(@PathVariable UUID id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("daily-calorie-goal");
         DailyStatistics dailyStatistics = dailyStatisticsService.getById(id);
-        modelAndView.addObject("calculateDailyCalorieGoalRequest", new CalculateDailyCalorieGoalRequest());
+        modelAndView.addObject("calculateDailyCalorieGoalRequest", new CalculateCalorieRequest());
         modelAndView.addObject("dailyStatistics", dailyStatistics);
         return modelAndView;
     }
 
-    @PostMapping("/{id}/daily-calorie-goal")
-    public ModelAndView processCalculateCalorieRequest(@PathVariable UUID id, @Valid CalculateDailyCalorieGoalRequest calculateDailyCalorieGoalRequest, BindingResult bindingResult) {
+    @PostMapping("/{id}/calorie-goal-and-calories-at-rest")
+    public ModelAndView processCalculateCalorieRequest(@PathVariable UUID id, @Valid CalculateCalorieRequest calculateDailyCalorieGoalRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("daily-calorie-goal");
@@ -58,9 +58,9 @@ public class DailyStatisticsController {
         }
         DailyStatistics dailyStatistics = dailyStatisticsService.getById(id);
         User user = userService.getById(dailyStatistics.getUser().getId());
-        dailyStatisticsService.calculateCalorieGoal(calculateDailyCalorieGoalRequest, user);
+        dailyStatisticsService.calculateCalorieGoalAndCaloriesAtRest(calculateDailyCalorieGoalRequest, user);
 
-        return new ModelAndView("redirect:daily-calorie-goal");
+        return new ModelAndView("redirect:/daily-statistics/{id}/calorie-goal-and-calories-at-rest");
     }
 
 

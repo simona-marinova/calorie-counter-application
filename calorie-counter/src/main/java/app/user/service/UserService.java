@@ -2,6 +2,9 @@ package app.user.service;
 
 
 import app.exception.DomainException;
+import app.exception.EditEmailAlreadyRegisteredException;
+import app.exception.EmailAlreadyRegisteredException;
+import app.exception.UsernameAlreadyExistsException;
 import app.security.AuthenticationDetails;
 import app.user.model.*;
 import app.user.repository.UserRepository;
@@ -42,7 +45,12 @@ public class UserService implements UserDetailsService {
 
         Optional<User> userOptional = userRepository.findByUsername(registerRequest.getUsername());
         if (userOptional.isPresent()) {
-            throw new DomainException("Username [%s] already exists".formatted(registerRequest.getUsername()));
+            throw new UsernameAlreadyExistsException("Username [%s] already exists".formatted(registerRequest.getUsername()));
+        }
+
+        Optional<User> optionalUser = userRepository.findByEmail(registerRequest.getEmail());
+        if (optionalUser.isPresent()) {
+            throw new EmailAlreadyRegisteredException("Email [%s] is already registered".formatted(registerRequest.getEmail()));
         }
 
         User user = initializeUser(registerRequest);
@@ -70,6 +78,12 @@ public class UserService implements UserDetailsService {
 
     public void editUser(UUID userId, UserEditRequest userEditRequest) {
         User user = getById(userId);
+        Optional<User> optionalUser = userRepository.findByEmail(userEditRequest.getEmail());
+
+        if (optionalUser.isPresent() && !optionalUser.get().getUsername().equals(user.getUsername())) {
+            throw new EditEmailAlreadyRegisteredException("Email [%s] is already registered".formatted(userEditRequest.getEmail()));
+        }
+
         user.setFirstName(userEditRequest.getFirstName());
         user.setLastName(userEditRequest.getLastName());
         user.setEmail(userEditRequest.getEmail());

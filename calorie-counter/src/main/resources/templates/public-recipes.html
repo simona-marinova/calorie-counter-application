@@ -17,7 +17,7 @@
         <div th:each="recipe : ${publicRecipes}" class="recipe-item">
             <h2><span th:text="${recipe.name}"></span></h2>
             <p>Calories per 100 grams: <span th:text="${recipe.caloriesPerHundredGrams}"></span></p>
-            <p>All Calories: <span th:text="${recipe.allCalories}"></span></p>
+            <p>All Calories: <span th:text="${recipe.getTotalCalories}"></span></p>
             <p>Instructions: <span th:text="${recipe.instructions}"></span></p>
             <h3>Food Items:</h3>
             <table class="food-items-table">

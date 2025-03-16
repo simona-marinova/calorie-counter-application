@@ -13,7 +13,7 @@
     <h1>Calculate Daily Calorie Goal</h1>
 </header>
 <main>
-    <form th:action="@{'/daily-statistics/' + ${id} + '/daily-calorie-goal'}" th:method="POST" th:object="${calculateDailyCalorieGoalRequest}">
+    <form th:action="@{'/daily-statistics/' + ${id} + '/calorie-goal-and-calories-at-rest'}" th:method="POST" th:object="${calculateDailyCalorieGoalRequest}">
         <div class="form-group">
             <label for="age">Age:</label>
             <input type="number" id="age" class="form-control" th:field="*{age}" />
@@ -39,6 +39,16 @@
             <p class="alert-warning" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
         </div>
         <div class="form-group">
+        <label for="calorieDeficit">Calorie Deficit:</label>
+        <select id="calorieDeficit" class="form-control" th:field="*{calorieDeficit}">
+            <option value="">Select Deficit</option>
+            <option value="200">200 calories</option>
+            <option value="300">300 calories</option>
+            <option value="400">400 calories</option>
+            <option value="500">500 calories</option>
+        </select>
+        </div>
+        <div class="form-group">
             <label for="activityLevel">Activity Level:</label>
             <select id="activityLevel" class="form-control" th:field="*{activityLevel}" >
                 <option value="">Select Activity Level</option>
@@ -59,7 +69,10 @@
     </form>
     <div class="result">
         <h3>Daily Calorie Goal:</h3>
-        <p th:text="${dailyStatistics.dailyCalorieGoal} + ' calories'"></p>
+        <p th:text="${dailyStatistics.getCalorieGoal} + ' calories'"></p>
+        <p th:if="${dailyStatistics.calorieGoal == 1200}">Minimum calories for the day are 1200 and can not be less.</p>
+        <h3>Burned Calories At Rest:</h3>
+        <p th:text="${dailyStatistics.burnedCaloriesAtRest} + ' calories'"></p>
     </div>
 </main>
 <footer>

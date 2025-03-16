@@ -32,10 +32,10 @@ public class MyRecipe {
     private double caloriesPerHundredGrams;
 
     @Column
-    private double allCalories;
+    private double totalCalories;
 
     @Column
-    boolean recipePublic;
+    boolean publicRecipe;
 
     @ManyToOne
     private User user;

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Server Error</title>
+    <link rel="stylesheet" type="text/css"  href="/css/internal-server-error.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <h1>Internal Server Error</h1>
+</header>
+
+<div class="main-content">
+    <p class="error-message">500 - Internal Server Error</p>
+    <a href="/home" class="back-to-home-button">Back to Home</a>
+    <span class="alert-warning">An unexpected error occurred on the server. Please try again later.</span>
+    <span class="alert-warning" th:text="${errorMessage}"></span>
+</div>
+
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

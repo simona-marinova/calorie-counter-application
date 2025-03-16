@@ -98,5 +98,13 @@ public class IndexController {
         return modelAndView;
     }
 
+    @GetMapping("/how-to-use")
+    public String getHowToUseTheAppPage() {
+        return "how-to-use-the-app";
+    }
 
+    @GetMapping("/tips")
+    public String getTipsPage() {
+        return "tips";
+    }
 }

@@ -19,7 +19,7 @@
       <tr>
         <th>Activity Type</th>
         <th>Duration (minutes)</th>
-        <th>Calories Burned</th>
+        <th>Burned Calories</th>
         <th>Created On</th>
       </tr>
       </thead>
@@ -27,7 +27,7 @@
       <tr th:each="activity : ${list}">
         <td th:text ="${#strings.capitalize(#strings.toLowerCase(activity.activityType))}"></td>
         <td th:text="${activity.duration}"></td>
-        <td th:text="${activity.caloriesBurned}"></td>
+        <td th:text="${activity.burnedCalories}"></td>
         <td th:text="${activity.createdOn}"></td>
       </tr>
       </tbody>

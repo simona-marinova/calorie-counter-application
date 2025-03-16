@@ -23,19 +23,23 @@ public class DailyStatistics {
     private LocalDate date;
 
     @Column
-    private double dailyCaloriesConsumed;
+    private double consumedCalories;
 
     @Column
-    private Double dailyCaloriesBurned;
+    private Double burnedCaloriesDuringActivity;
 
     @Column
-    private Double dailyCaloriesRemaining;
+    private Double burnedCaloriesAtRest;
+
+
+    @Column
+    private Double remainingCalories;
 
     @Column
     private double weight;
 
     @Column
-    private double dailyCalorieGoal;
+    private double calorieGoal;
 
     @ManyToOne
     private User user;

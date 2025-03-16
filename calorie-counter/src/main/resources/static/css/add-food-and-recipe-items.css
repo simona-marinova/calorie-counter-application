@@ -81,3 +81,18 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
+.save-meal-button, .save-recipe-button {
+    padding: 0.5rem 1rem;
+    background-color: #9ACD32;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.save-meal-button:hover,.save-recipe-button.hover {
+    background-color: #82B12F;
+}

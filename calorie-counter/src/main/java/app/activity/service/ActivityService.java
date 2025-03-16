@@ -42,15 +42,15 @@ public class ActivityService {
 
             log.error("[Feign call to burned calories tracker failed.] Can't save activity for user with id = [%s]".formatted(userId));
         }
-        double calories = httpResponse.getBody().getCaloriesBurned();
+        double calories = httpResponse.getBody().getBurnedCalories();
         return calories;
     }
 
-    public List<ActivityResponse> getLast50Activities(List<ActivityResponse> activityHistory) {
+    public List<ActivityResponse> getLast30Activities(List<ActivityResponse> activityHistory) {
 
         return activityHistory
                 .stream()
-                .limit(50).toList();
+                .limit(30).toList();
     }
 
 }

@@ -28,6 +28,7 @@
             <p class="alert-warning" th:if="${#fields.hasErrors('recipeItemQuantity')}" th:errors ="*{recipeItemQuantity}"></p>
         </div>
         <button type="submit" name="action" value="addRecipe">Add Recipe</button>
+        <a th:href="@{/meals}" class="save-meal-button">Save Meal</a> </form>
     </form>
     <div>
         <h2>Added Recipe Items:</h2>

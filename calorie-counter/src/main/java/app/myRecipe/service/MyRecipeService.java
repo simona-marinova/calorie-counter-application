@@ -84,7 +84,7 @@ public class MyRecipeService {
                 .instructions(createMyRecipeRequest.getInstructions())
                 .user(user)
                 .foodItems(new ArrayList<>())
-                .recipePublic(createMyRecipeRequest.isRecipePublic())
+                .publicRecipe(createMyRecipeRequest.isRecipePublic())
                 .build();
 
         myRecipeRepository.save(myRecipe);
@@ -102,7 +102,7 @@ public class MyRecipeService {
         }
         foodItems.add(foodItem);
         myRecipe.setFoodItems(foodItems);
-        myRecipe.setAllCalories(myRecipe.getAllCalories() + foodItem.getCalories());
+        myRecipe.setTotalCalories(myRecipe.getTotalCalories() + foodItem.getCalories());
         myRecipe.setCaloriesPerHundredGrams(calculateCaloriesPer100Grams(myRecipe));
         myRecipeRepository.save(myRecipe);
     }
@@ -119,7 +119,7 @@ public class MyRecipeService {
     public void removeFoodItemFromRecipe(UUID id, UUID foodItemId) {
         MyRecipe myRecipe = getById(id);
         FoodItem foodItem = foodService.getFoodItemById(foodItemId);
-        myRecipe.setAllCalories(myRecipe.getAllCalories() - foodItem.getCalories());
+        myRecipe.setTotalCalories(myRecipe.getTotalCalories() - foodItem.getCalories());
         List<FoodItem> foodItems = foodService.getFoodItemsByRecipeId(id);
         foodItems.remove(foodItem);
         foodService.deleteFoodItemById(foodItemId);
@@ -175,7 +175,7 @@ public class MyRecipeService {
     }
 
     public List<MyRecipe> getAllPublicRecipes(UUID userId) {
-        return myRecipeRepository.findAllByRecipePublic(true)
+        return myRecipeRepository.findAllByPublicRecipe(true)
                 .stream()
                 .filter(r -> !r.getUser().getId().equals(userId)).toList();
     }

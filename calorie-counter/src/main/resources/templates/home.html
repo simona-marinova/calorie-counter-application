@@ -16,9 +16,12 @@
             <li><a href="/my-recipes">My Recipes</a></li>
             <li><a th:href="@{/foods}">Foods</a></li>
             <li><a th:href="@{'/users/' + ${user.id} + '/profile'}">Edit Profile</a></li>
-            <li><a th:href="@{'/daily-statistics/history'}">Daily Statistics History</a></li>
+            <li><a th:href="@{'/daily-statistics/history'}">Daily Statistics</a></li>
             <li><a th:href="@{'/activities'}">Activities</a></li>
             <li><a th:href="@{'/users'}" th:if="${user.userRole.name() =='ADMIN'}">Users</a></li>
+            <li><a th:href="@{'/how-to-use'}">How To Use The App</a></li>
+            <li><a th:href="@{'/tips'}">Tips</a></li>
+
         </ul>
     </nav>
     <h1>Calorie Counter</h1>
@@ -29,23 +32,26 @@
     <section th:object="${dailyStatistics}" id="daily-summary">
         <h2>Daily Summary</h2>
         <div id="calories-consumed">
-            <p>Calories Consumed: <span id="consumed-value" th:text="${dailyStatistics.dailyCaloriesConsumed}"></span></p>
+            <p>Consumed Calories: <span id="consumed-value" th:text="${dailyStatistics.consumedCalories}"></span></p>
         </div>
-        <div id="calories-burned">
-            <p>Calories Burned: <span id="burned-value" th:text="${dailyStatistics.getDailyCaloriesBurned}"></span></p>
+        <div id="calories-burned-from-activity">
+            <p>Burned Calories From Activity: <span id="burned-from-activity-value" th:text="${dailyStatistics.burnedCaloriesDuringActivity}"></span></p>
+        </div>
+        <div id="calories-burned=from-rest">
+            <p>Burned Calories From Rest: <span id="burned-from-rest-value" th:text="${dailyStatistics.burnedCaloriesAtRest}"></span></p>
         </div>
         <div id="calories-goal">
-            <p>Calorie Goal: <span id="goal-value" th:text="${dailyStatistics.dailyCalorieGoal}">0</span></p>
+            <p>Calorie Goal: <span id="goal-value" th:text="${dailyStatistics.calorieGoal}">0</span></p>
         </div>
         <div id="calories-remaining">
-            <p>Calories Remaining: <span id="remaining-value" th:text="${dailyStatistics.dailyCaloriesRemaining}"></span></p>
+            <p>Remaining Calories: <span id="remaining-value" th:text="${dailyStatistics.remainingCalories}"></span></p>
         </div>
         </div>
         <div id="current-weight">
             <p>Current weight: <span id="weight-value" th:text="${user.weight}"></span></p>
         </div>
     </section>
-    <a th:href="@{'/daily-statistics/' + ${dailyStatistics.id} + '/daily-calorie-goal'}" class="calculate-button">Calculate Daily Calorie Goal</a>
+    <a th:href="@{'/daily-statistics/' + ${dailyStatistics.id} + '/calorie-goal-and-calories-at-rest'}" class="calculate-button">Calculate Calorie Goal And Burned Calories At Rest</a>
     <a th:href="@{'/activities/new'}" class="enter-burned-button">Add Activity</a>
     <a th:href="@{'/daily-statistics/weight'}" class="enter-burned-button">Add current weight</a>
 </main>

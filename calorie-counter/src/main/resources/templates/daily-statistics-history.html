@@ -28,9 +28,9 @@
             <tbody>
             <tr th:each="dailyStatistics: ${dailyStatisticsHistory}">
                 <td th:text ="${#temporals.format(dailyStatistics.date, 'dd MMM YYYY')}"></td>
-                <td th:text ="${dailyStatistics.dailyCalorieGoal == 0 ? '-' : dailyStatistics.dailyCalorieGoal}"></td>
-                <td th:text ="${dailyStatistics.dailyCaloriesConsumed == 0 ? '-' : dailyStatistics.dailyCaloriesConsumed}"></td>
-                <td th:text ="${dailyStatistics.dailyCaloriesBurned == 0 ? '-' : dailyStatistics.dailyCaloriesBurned}"></td>
+                <td th:text ="${dailyStatistics.calorieGoal == 0 ? '-' : dailyStatistics.calorieGoal}"></td>
+                <td th:text ="${dailyStatistics.consumedCalories == 0 ? '-' : dailyStatistics.consumedCalories}"></td>
+                <td th:text ="${dailyStatistics.burnedCaloriesDuringActivity== 0 ? '-' : dailyStatistics.burnedCaloriesDuringActivity}"></td>
                 <td th:text ="${dailyStatistics.weight == 0 ? '-' : dailyStatistics.weight}"></td>
             </tr>
             </tbody>

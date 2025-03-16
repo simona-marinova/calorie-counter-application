@@ -59,7 +59,7 @@ public class ActivityController {
     public ModelAndView getActivitiesHistory(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getById(authenticationDetails.getUserId());
         List<ActivityResponse> activityHistory = activityService.getActivityHistory(authenticationDetails.getUserId());
-        List<ActivityResponse> list = activityService.getLast50Activities(activityHistory);
+        List<ActivityResponse> list = activityService.getLast30Activities(activityHistory);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("activity-history");
         modelAndView.addObject("user", user);

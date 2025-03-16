@@ -15,7 +15,7 @@ public class ActivityResponse {
     private int duration;
 
     @NotNull
-    private double caloriesBurned;
+    private double burnedCalories;
 
     @NotBlank
     private String createdOn;

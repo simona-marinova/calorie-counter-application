@@ -13,7 +13,7 @@ public interface MyRecipeRepository extends JpaRepository<MyRecipe, UUID> {
 
     Optional<MyRecipe> findByUserIdAndName( UUID userId, String name );
 
-    List<MyRecipe> findAllByRecipePublic(boolean publicRecipe);
+    List<MyRecipe> findAllByPublicRecipe(boolean publicRecipe);
 
     List<MyRecipe> findAllByUserId(UUID userId);
 }
