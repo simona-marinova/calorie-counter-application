@@ -1,6 +1,7 @@
 package app.myRecipe.service;
 
 import app.exception.DomainException;
+import app.exception.MyRecipeAlreadyExistsException;
 import app.food.model.FoodItem;
 import app.food.service.FoodService;
 import app.meal.model.Meal;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -78,6 +80,11 @@ public class MyRecipeService {
     }
 
     public void createNewRecipe(CreateMyRecipeRequest createMyRecipeRequest, User user) {
+        Optional<MyRecipe> optionalRecipe = myRecipeRepository.findByUserIdAndName(user.getId(), createMyRecipeRequest.getName());
+
+        if(optionalRecipe.isPresent()) {
+            throw new MyRecipeAlreadyExistsException("Recipe with this name [%s] already exists".formatted(createMyRecipeRequest.getName()));
+        }
 
         MyRecipe myRecipe = MyRecipe.builder()
                 .name(createMyRecipeRequest.getName())

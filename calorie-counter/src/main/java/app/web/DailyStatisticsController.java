@@ -35,30 +35,27 @@ public class DailyStatisticsController {
     }
 
 
-
     @GetMapping("/{id}/calorie-goal-and-calories-at-rest")
     public ModelAndView calculateCalorieGoalAndCaloriesAtRest(@PathVariable UUID id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("daily-calorie-goal");
+        modelAndView.setViewName("calorie-goal-and-calories-at-rest");
         DailyStatistics dailyStatistics = dailyStatisticsService.getById(id);
-        modelAndView.addObject("calculateDailyCalorieGoalRequest", new CalculateCalorieRequest());
+        modelAndView.addObject("calculateCalorieRequest", new CalculateCalorieRequest());
         modelAndView.addObject("dailyStatistics", dailyStatistics);
         return modelAndView;
     }
 
     @PostMapping("/{id}/calorie-goal-and-calories-at-rest")
-    public ModelAndView processCalculateCalorieRequest(@PathVariable UUID id, @Valid CalculateCalorieRequest calculateDailyCalorieGoalRequest, BindingResult bindingResult) {
+    public ModelAndView processCalculateCalorieRequest(@PathVariable UUID id, @Valid CalculateCalorieRequest calculateCalorieRequest, BindingResult bindingResult, @AuthenticationPrincipal AuthenticationDetails authenticationDetail) {
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("daily-calorie-goal");
+            modelAndView.setViewName("calorie-goal-and-calories-at-rest");
             DailyStatistics dailyStatistics = dailyStatisticsService.getById(id);
-            modelAndView.addObject("calculateDailyCalorieGoalRequest", calculateDailyCalorieGoalRequest);
+            modelAndView.addObject("calculateCalorieRequest", calculateCalorieRequest);
             modelAndView.addObject("dailyStatistics", dailyStatistics);
             return modelAndView;
         }
-        DailyStatistics dailyStatistics = dailyStatisticsService.getById(id);
-        User user = userService.getById(dailyStatistics.getUser().getId());
-        dailyStatisticsService.calculateCalorieGoalAndCaloriesAtRest(calculateDailyCalorieGoalRequest, user);
+        dailyStatisticsService.calculateCalorieGoalAndCaloriesAtRest(calculateCalorieRequest, authenticationDetail.getUserId());
 
         return new ModelAndView("redirect:/daily-statistics/{id}/calorie-goal-and-calories-at-rest");
     }
@@ -79,7 +76,6 @@ public class DailyStatisticsController {
         if (bindingResult.hasErrors()) {
             return "add-current-weight";
         }
-        User user = userService.getById(authenticationDetails.getUserId());
 
         dailyStatisticsService.updateCurrentWeight(authenticationDetails.getUserId(), currentWeightRequest);
 

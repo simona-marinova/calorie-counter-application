@@ -144,9 +144,8 @@ public class MealService {
         }
         meal.setMyRecipeItems(new ArrayList<>());
         meal.setFoodItems(new ArrayList<>());
-        DailyStatistics dailyStatistics = dailyStatisticsService.getDailyStatisticsByDateAndUserId(LocalDate.now(), userId);
-        dailyStatisticsService.calculateRemainingCalories(userId, dailyStatistics);
-        dailyStatisticsService.lowerCaloriesConsumed(userId, dailyStatistics, calories);
+        dailyStatisticsService.updateRemainingCalories(userId, calories);
+        dailyStatisticsService.lowerCaloriesConsumed(userId,calories);
         mealRepository.save(meal);
     }
 

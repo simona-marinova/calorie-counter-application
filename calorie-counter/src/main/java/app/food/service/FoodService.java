@@ -2,6 +2,8 @@ package app.food.service;
 
 
 import app.exception.DomainException;
+import app.exception.FoodAlreadyExistsException;
+import app.exception.FoodItemAlreadyExistsException;
 import app.food.model.Food;
 import app.food.model.FoodItem;
 import app.food.repository.FoodItemRepository;
@@ -41,7 +43,7 @@ public class FoodService {
 
         Optional<Food> optionalFood = foodRepository.findByUserIdAndName(user.getId(), createFoodRequest.getName());
         if (optionalFood.isPresent()) {
-           throw new DomainException("Food with this name [%s] already exists".formatted(createFoodRequest.getName()));
+            throw new FoodAlreadyExistsException("Food with this name [%s] already exists".formatted(createFoodRequest.getName()));
         }
 
         Food food = Food.builder()
@@ -65,7 +67,6 @@ public class FoodService {
     }
 
 
-
     public double getFoodCalories(UUID userId, String foodItemName) {
         Food food = getByUserIdAndName(userId, foodItemName);
         return food.getCaloriesPerHundredGrams();
@@ -87,6 +88,11 @@ public class FoodService {
     }
 
     public FoodItem createNewFoodItemForRecipe(AddFoodItemRequest addFoodItemRequest, UUID userId, MyRecipe myRecipe) {
+
+        Optional<FoodItem> optionalFoodItem = foodItemRepository.findByMyRecipeIdAndName(myRecipe.getId(), addFoodItemRequest.getFoodItemName());
+        if (optionalFoodItem.isPresent() && optionalFoodItem.get().getQuantityInGrams() == addFoodItemRequest.getFoodItemQuantity()) {
+            throw new FoodItemAlreadyExistsException("Food item with name [%s] and quantity [%s] is already added in this recipe".formatted(addFoodItemRequest.getFoodItemName(), addFoodItemRequest.getFoodItemQuantity()));
+        }
         FoodItem foodItem = new FoodItem();
         foodItem.setName(addFoodItemRequest.getFoodItemName());
         foodItem.setQuantityInGrams(addFoodItemRequest.getFoodItemQuantity());
@@ -108,6 +114,7 @@ public class FoodService {
     public Food getByUserIdAndName(UUID userId, String name) {
         return foodRepository.findByUserIdAndName(userId, name).orElseThrow(() -> new DomainException("Food with name [%s] does not exist.".formatted(name)));
     }
+
     public void deleteFoodById(UUID id) {
         foodRepository.deleteById(id);
     }
@@ -135,5 +142,6 @@ public class FoodService {
     public void deleteFoodItemById(UUID foodItemId) {
         foodItemRepository.deleteById(foodItemId);
     }
+
 }
 

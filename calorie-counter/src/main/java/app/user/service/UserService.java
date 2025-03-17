@@ -2,7 +2,7 @@ package app.user.service;
 
 
 import app.exception.DomainException;
-import app.exception.EditEmailAlreadyRegisteredException;
+import app.exception.EditUserEmailAlreadyRegisteredException;
 import app.exception.EmailAlreadyRegisteredException;
 import app.exception.UsernameAlreadyExistsException;
 import app.security.AuthenticationDetails;
@@ -13,7 +13,6 @@ import app.web.dto.UserEditRequest;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -81,7 +80,7 @@ public class UserService implements UserDetailsService {
         Optional<User> optionalUser = userRepository.findByEmail(userEditRequest.getEmail());
 
         if (optionalUser.isPresent() && !optionalUser.get().getUsername().equals(user.getUsername())) {
-            throw new EditEmailAlreadyRegisteredException("Email [%s] is already registered".formatted(userEditRequest.getEmail()));
+            throw new EditUserEmailAlreadyRegisteredException("Email [%s] is already registered".formatted(userEditRequest.getEmail()));
         }
 
         user.setFirstName(userEditRequest.getFirstName());
@@ -93,6 +92,7 @@ public class UserService implements UserDetailsService {
         user.setActivityLevel(userEditRequest.getActivityLevel());
         user.setCountry(userEditRequest.getCountry());
         user.setWeightGoal(userEditRequest.getWeightGoal());
+        user.setUpdatedOn(LocalDateTime.now());
         userRepository.save(user);
     }
 
@@ -104,9 +104,10 @@ public class UserService implements UserDetailsService {
         return new AuthenticationDetails(user.getId(), username, user.getPassword(), user.getUserRole(), user.isActive());
     }
 
-    public void updateUserWeight(UUID userId, double weight) {
+    public void updateWeight(UUID userId, double weight) {
         User user = getById(userId);
         user.setWeight(weight);
+        user.setUpdatedOn(LocalDateTime.now());
         userRepository.save(user);
 
     }
@@ -127,12 +128,14 @@ public class UserService implements UserDetailsService {
         } else {
             user.setUserRole(UserRole.USER);
         }
+        user.setUpdatedOn(LocalDateTime.now());
         userRepository.save(user);
     }
 
     public void changeStatus(UUID userId) {
         User user = getById(userId);
         user.setActive(!user.isActive());
+        user.setUpdatedOn(LocalDateTime.now());
         userRepository.save(user);
     }
 

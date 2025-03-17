@@ -1,0 +1,83 @@
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #FFC0CB;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+h1, h2, h3 {
+    color: white;
+}
+
+p {
+    line-height: 1.6;
+}
+
+ul, ol {
+    margin-left: 20px;
+}
+
+p.required-steps {
+    color: red;
+    font-weight: bold;
+}
+
+p strong {
+    font-weight: bold;
+}
+
+
+.table-pair {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.table-container {
+    width: 48%;
+    background-color: #FFC0CB;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 6px 8px;
+    text-align: left;
+    font-size: 0.9em;
+}
+
+th {
+    background-color: #9ACD32;
+    color: white;
+}
+
+
+th:first-child, td:first-child {
+    width: 60%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 40%;
+}

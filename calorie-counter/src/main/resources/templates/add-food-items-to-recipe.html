@@ -28,7 +28,7 @@
             <label for="foodQuantityInput">Add Food Quantity (Grams):</label>
             <input  th:field="*{foodItemQuantity}" type="number" id="foodQuantityInput" name="foodQuantity" class="form-control"/>
             <p class="alert-warning" th:if="${#fields.hasErrors('foodItemQuantity')}" th:errors ="*{foodItemQuantity}"></p>
-
+            <p class="alert-warning" th:text="${thisFoodItemAlreadyExists}"></p>
         </div>
         <button type="submit" name="action" value="addFood">Add Food</button>
         <a th:href="@{/my-recipes}" class="save-recipe-button">Save Recipe</a> </form>

@@ -87,7 +87,7 @@ public class IndexController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
-      mealService.createMealsForTheDay(user.getId());
+        mealService.createMealsForTheDay(user.getId());
         LocalDate today = LocalDate.now();
         List<Meal> meals = mealService.getMealsByUserIdAndDate(user.getId(), today);
         modelAndView.addObject("meals", meals);
@@ -106,5 +106,11 @@ public class IndexController {
     @GetMapping("/tips")
     public String getTipsPage() {
         return "tips";
+    }
+
+
+    @GetMapping("/calories-in-foods")
+    public String getCaloriesInFoodsPage() {
+        return "calories-in-foods";
     }
 }

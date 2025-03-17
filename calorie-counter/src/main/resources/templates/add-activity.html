@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Activity</title>
+    <link rel="stylesheet" href="/css/add-activity.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+</head>
+<body>
+<header>
+    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <h1>Add Activity</h1>
+</header>
+<main>
+    <form th:action="@{'/activities/new'}" th:method="POST" th:object="${caloriesBurnedRequest}">
+        <div class="form-group">
+            <label for="duration">Duration (minutes):</label>
+            <input type="number" id="duration" name="duration" th:field="*{duration}" required>
+            <p class="alert-warning" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></p>
+        </div>
+        <div class="form-group">
+            <label for="activityType">Activity Type:</label>
+            <select id="activityType" name="activityType" th:field="*{activityType}" required>
+                <option value="">Select activity type</option>
+                <option value="WALKING">WALKING</option>
+                <option value="RUNNING">RUNNING</option>
+                <option value="CARDIO">CARDIO</option>
+                <option value="WEIGHT_TRAINING">WEIGHT_TRAINING</option>
+            </select>
+            <p class="alert-warning" th:if="${#fields.hasErrors('activityType')}" th:errors="*{activityType}"></p>
+        </div>
+        <button type="submit">Calculate Burned Calories</button>
+        <a th:href="@{/home}" class="save-button">Save</a> </form>
+    </form>
+    <div class="result">
+        <h3>Calories Burned:</h3>
+        <p th:if="${calories != null}" th:text="${calories} + ' calories'"></p>
+        <p th:unless="${calories != null}">No calories calculated yet.</p>
+    </div>
+</main>
+<footer>
+    <p>&copy; 2025 Calorie Counter. All rights reserved.</p>
+</footer>
+</body>
+</html>

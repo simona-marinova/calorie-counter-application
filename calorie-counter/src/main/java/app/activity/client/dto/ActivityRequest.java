@@ -12,7 +12,9 @@ public class ActivityRequest {
 
     private UUID userId;
 
+
     private String activityType;
+
 
     private int duration;
 

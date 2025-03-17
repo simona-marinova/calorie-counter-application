@@ -3,7 +3,7 @@
     font-size: 0.8em;
     display: block;
 }
-.back-to-home-button {
+.back-to-home-button, .back {
     display: inline-block;
     padding: 8px 16px;
     background-color: #9ACD32;
@@ -16,7 +16,7 @@
     left: 10px;
 }
 
-.back-to-home-button:hover {
+.back-to-home-button:hover, .back:hover {
     background-color: #82B12F;
 }
 

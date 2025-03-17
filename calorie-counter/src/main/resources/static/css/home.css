@@ -9,7 +9,6 @@ body {
     min-height: 100vh;
 }
 
-
 nav ul {
     list-style: none;
     padding: 0;
@@ -19,7 +18,6 @@ nav ul {
 
 nav li {
     display: inline;
-
 }
 
 nav a {
@@ -42,6 +40,24 @@ main {
     margin-bottom: 2rem;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+#daily-summary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 192, 203, 0.7);
+    border-radius: 5px;
+    z-index: 0;
+}
+
+#daily-summary > * {
+    position: relative;
+    z-index: 1;
 }
 
 #daily-summary p,
@@ -106,4 +122,3 @@ button,
     cursor: pointer;
     text-decoration: none;
 }
-

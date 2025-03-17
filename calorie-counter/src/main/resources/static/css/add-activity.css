@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #FFC0CB;
-    color: #9ACD32;
+    color: #333;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -13,6 +13,7 @@ main {
     padding: 2rem;
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -31,22 +32,29 @@ form {
 
 label {
     display: block;
-    color:black;
     margin-bottom: 0.5rem;
 }
 
-.form-control {
+input[type="number"], select {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 5px;
+    color: #333;
 }
 
-button {
+button, .save-button{
     padding: 0.5rem 1rem;
     background-color: #9ACD32;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+
+
+.result {
+    margin-top: 20px;
+    text-align: center;
 }

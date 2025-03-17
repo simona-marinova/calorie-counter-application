@@ -12,6 +12,7 @@
     <h1>Calorie Counter</h1>
     <h2>Register Here</h2>
 </header>
+<a th:href="@{/}" class="back">Back</a>
 <form th:method="POST" th:action="@{/register}" th:object="${registerRequest}">
     <div class="form-group">
         <label for="username">Username:</label>

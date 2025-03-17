@@ -36,7 +36,7 @@ public class ActivityController {
     public ModelAndView getCaloriesBurnedPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, CaloriesBurnedRequest caloriesBurnedRequest) {
         User user = userService.getById(authenticationDetails.getUserId());
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("calories-burned");
+        modelAndView.setViewName("add-activity");
         modelAndView.addObject("user", user);
         modelAndView.addObject("caloriesBurnedRequest", new CaloriesBurnedRequest());
         return modelAndView;
@@ -46,7 +46,7 @@ public class ActivityController {
     public ModelAndView createActivity(CaloriesBurnedRequest caloriesBurnedRequest, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("calories-burned");
+        modelAndView.setViewName("add-activity");
         modelAndView.addObject("caloriesBurnedRequest", caloriesBurnedRequest);
         double calories = activityService.saveActivity(authenticationDetails.getUserId(), caloriesBurnedRequest.getActivityType(), caloriesBurnedRequest.getDuration());
         caloriesBurnedRequest.setCaloriesBurned(calories);

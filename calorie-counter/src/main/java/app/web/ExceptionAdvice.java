@@ -1,21 +1,15 @@
 package app.web;
 
 
-import app.exception.EditEmailAlreadyRegisteredException;
-import app.exception.EmailAlreadyRegisteredException;
-import app.exception.UsernameAlreadyExistsException;
-import app.security.AuthenticationDetails;
-import app.user.model.User;
+import app.exception.*;
+;
 import app.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authorization.AuthorizationDeniedException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,13 +45,38 @@ public class ExceptionAdvice {
         return "redirect:/register";
     }
 
-    @ExceptionHandler(EditEmailAlreadyRegisteredException.class)
-    public String handleEditEmailAlreadyRegistered(RedirectAttributes redirectAttributes, @PathVariable UUID id) {
+    @ExceptionHandler(EditUserEmailAlreadyRegisteredException.class)
+    public String handleEditUserEmailAlreadyRegistered(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
+        redirectAttributes.addFlashAttribute("editUserEmailAlreadyRegistered", "This email is already registered");
 
-        redirectAttributes.addFlashAttribute("editEmailAlreadyRegistered", "This email is already registered");
+        String servletPath = request.getServletPath();
+        return "redirect:" + servletPath;
+    }
 
-        return "redirect:/users/{id}/profile";
+    @ExceptionHandler(MyRecipeAlreadyExistsException.class)
+    public String handleMyRecipeAlreadyExists(RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("thisRecipeAlreadyExists", "This recipe already exists");
+
+        return "redirect:/my-recipes/new";
+    }
+
+    @ExceptionHandler(FoodAlreadyExistsException.class)
+    public String handleFoodAlreadyExists(RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("thisFoodAlreadyExists", "This food already exists");
+
+        return "redirect:/foods/new";
+    }
+
+    @ExceptionHandler(FoodItemAlreadyExistsException.class)
+    public String handleFoodItemAlreadyExists(RedirectAttributes redirectAttributes, HttpServletRequest request) {
+
+        redirectAttributes.addFlashAttribute("thisFoodItemAlreadyExists", "This food item is already added to this recipe.");
+
+        String servletPath = request.getServletPath();
+        return "redirect:" + servletPath;
     }
 
 
