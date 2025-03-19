@@ -61,3 +61,7 @@ input {
     margin: 0 10px;
 }
 
+.button:hover {
+    background-color: #82B12F;
+}
+

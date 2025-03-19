@@ -30,7 +30,7 @@
             <p class="alert-warning" th:if="${#fields.hasErrors('foodItemQuantity')}" th:errors ="*{foodItemQuantity}"></p>
             <p class="alert-warning" th:text="${thisFoodItemAlreadyExists}"></p>
         </div>
-        <button type="submit" name="action" value="addFood">Add Food</button>
+        <button type="submit" name="action" value="addFood" class="add-food-button">Add Food</button>
         <a th:href="@{/my-recipes}" class="save-recipe-button">Save Recipe</a> </form>
 
     </form>

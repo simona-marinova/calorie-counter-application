@@ -100,6 +100,7 @@ th {
 button,
 .calculate-button,
 .enter-burned-button,
+.add-weight-button,
 .logout-button {
     padding: 0.5rem 1rem;
     background-color: #9ACD32;
@@ -111,6 +112,11 @@ button,
     margin-top: 10px;
 }
 
+.calculate-button:hover,
+.enter-burned-button:hover,
+.add-weight-button:hover {
+    background-color: #82B12F;
+}
 .logout-button {
     background-color: #FFC0CB;
     color: white;
@@ -121,4 +127,7 @@ button,
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
+}
+.logout-button:hover {
+    background-color: #D198A2;
 }

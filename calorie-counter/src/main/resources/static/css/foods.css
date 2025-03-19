@@ -9,7 +9,6 @@ body {
     min-height: 100vh;
 }
 
-
 main {
     padding: 2rem;
     flex: 1;
@@ -42,11 +41,11 @@ main {
     border-radius: 4px;
 }
 
-
-a{
+a {
     color: white;
     text-decoration: none;
 }
+
 .edit-button {
     display: inline-block;
     padding: 8px 16px;
@@ -57,9 +56,10 @@ a{
     margin-top: 10px;
 }
 
-.edit-button{
+.edit-button:hover {
     background-color: #82B12F;
 }
+
 .add-food-button {
     position: absolute;
     top: 20px;
@@ -71,6 +71,7 @@ a{
     border-radius: 4px;
     font-size: 16px;
 }
+
 .delete-button {
     display: inline-block;
     padding: 8px 16px;
@@ -82,7 +83,7 @@ a{
     cursor: pointer;
 }
 
-.delete-button{
+.delete-button:hover {
     background-color: #82B12F;
 }
 
@@ -102,4 +103,3 @@ a{
 .add-food-button:hover {
     background-color: #82B12F;
 }
-

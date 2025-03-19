@@ -43,16 +43,21 @@ input[type="number"], select {
     color: #333;
 }
 
-button, .save-button{
+button, .save-button {
     padding: 0.5rem 1rem;
     background-color: #9ACD32;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: inline-block;
+    margin-right: 5px;
+    text-decoration: none;
 }
 
-
+button:hover, .save-button:hover {
+    background-color: #82B12F;
+}
 
 .result {
     margin-top: 20px;

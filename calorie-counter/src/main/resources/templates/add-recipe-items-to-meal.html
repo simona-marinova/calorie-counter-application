@@ -27,7 +27,7 @@
             <input th:field="*{recipeItemQuantity}" type="number" id="recipeQuantityInput" name="recipeQuantity" class="form-control"/>
             <p class="alert-warning" th:if="${#fields.hasErrors('recipeItemQuantity')}" th:errors ="*{recipeItemQuantity}"></p>
         </div>
-        <button type="submit" name="action" value="addRecipe">Add Recipe</button>
+        <button type="submit" name="action" value="addRecipe" class="add-recipe-button">Add Recipe</button>
         <a th:href="@{/meals}" class="save-meal-button">Save Meal</a> </form>
     </form>
     <div>

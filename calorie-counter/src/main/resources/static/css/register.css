@@ -54,4 +54,6 @@ select {
     cursor: pointer;
 }
 
-
+.register-button:hover {
+    background-color: #82B12F;
+}

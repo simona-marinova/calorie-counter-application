@@ -67,3 +67,7 @@ button {
 .footer p {
     color: white;
 }
+
+.button:hover {
+    background-color: #82B12F;
+}

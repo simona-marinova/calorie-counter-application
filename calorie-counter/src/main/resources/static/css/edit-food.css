@@ -52,6 +52,9 @@ label {
     cursor: pointer;
 }
 
+.save-button:hover {
+    background-color: #82B12F;
+}
 
 a{
     color:white;

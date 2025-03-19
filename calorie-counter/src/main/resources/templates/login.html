@@ -24,7 +24,7 @@
         <input type="password" id="password" name="password" required th:field="*{password}">
         <p class="alert-warning" th:if="${errorMessage}" th:text="${errorMessage}"></p>
     </div>
-    <button type="submit">Login</button>
+    <button type="submit" class="button">Login</button>
     <p >Don't have an account? <a th:href="@{/register}" class="register-link"><u>Register now</u></a>
 </form>
 <footer>

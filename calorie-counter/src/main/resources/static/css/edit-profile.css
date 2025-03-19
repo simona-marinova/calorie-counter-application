@@ -67,6 +67,9 @@ select {
     margin: 20px auto 0;
 }
 
+.save-button:hover {
+    background-color: #82B12F;
+}
 
 a {
     color: white;

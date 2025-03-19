@@ -10,7 +10,7 @@
 <body>
 <header>
     <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
-    <h1>Calculate Daily Calorie Goal</h1>
+    <h1>Calculate Daily Calorie Goal And Burned Calories At Rest</h1>
 </header>
 <main>
     <form th:action="@{'/daily-statistics/' + ${id} + '/calorie-goal-and-calories-at-rest'}" th:method="POST" th:object="${calculateCalorieRequest}">

@@ -64,9 +64,10 @@ button, .add-food-link {
     cursor: pointer;
 }
 
-.add-food-link:hover, .back-to-my-recipes-button:hover {
+.add-food-link:hover, .back-to-my-recipes-button:hover, .add-food-button:hover, .add-recipe-button:hover {
     background-color: #82B12F;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -93,6 +94,6 @@ th {
     display: inline-block;
 }
 
-.save-meal-button:hover,.save-recipe-button.hover {
+.save-meal-button:hover,.save-recipe-button:hover{
     background-color: #82B12F;
 }
