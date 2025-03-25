@@ -1,7 +1,6 @@
 package app.meal.service;
 
 
-import app.dailyStatistics.model.DailyStatistics;
 import app.dailyStatistics.service.DailyStatisticsService;
 import app.exception.DomainException;
 import app.food.model.FoodItem;
@@ -44,11 +43,10 @@ public class MealService {
     }
 
 
-
     public void addFoodItemsToMeal(AddFoodItemRequest addFoodItemRequest, UUID userId, UUID id) {
-    Meal meal = getMealById(id);
+        Meal meal = getMealById(id);
 
-    double foodCalories = 0;
+        double foodCalories = 0;
 
         FoodItem foodItem = foodService.createNewFoodItemForMeal(addFoodItemRequest, userId, meal);
         List<FoodItem> foodItems = foodService.getFoodItemsByMealId(id);
@@ -60,7 +58,7 @@ public class MealService {
         dailyStatisticsService.updateConsumedAndRemainingCalories(foodCalories, userId);
 
         mealRepository.save(meal);
-}
+    }
 
     public void addRecipeItemsToMeal(AddRecipeItemRequest addRecipeItemRequest, UUID userId, UUID id) {
         Meal meal = getMealById(id);
@@ -71,10 +69,9 @@ public class MealService {
         List<MyRecipeItem> myRecipeItems = meal.getMyRecipeItems();
         myRecipeItems.add(myRecipeItem);
         meal.setMyRecipeItems(myRecipeItems);
-        myRecipeCalories = myRecipeItem.getCalories();
-
-        meal.setCalories(meal.getCalories() + myRecipeCalories);
-        dailyStatisticsService.updateConsumedAndRemainingCalories(myRecipeCalories, userId);
+        double myRecipeItemCalories = myRecipeItem.getCalories();
+        meal.setCalories(Math.round((meal.getCalories() + myRecipeItemCalories) * 100.0) / 100.0);
+        dailyStatisticsService.updateConsumedAndRemainingCalories(myRecipeItemCalories, userId);
 
         mealRepository.save(meal);
     }
@@ -117,13 +114,13 @@ public class MealService {
             snack.setCalories(0);
             snack.setFoodItems(new ArrayList<>());
             snack.setMyRecipeItems(new ArrayList<>());
-            mealRepository.save(snack);
+           mealRepository.save(snack);
         }
     }
 
 
     public List<Meal> getMealsByUserIdAndDate(UUID userId, LocalDate date) {
-        return mealRepository.findAllByUserIdAndDate(userId,date);
+        return mealRepository.findAllByUserIdAndDate(userId, date);
     }
 
 
@@ -145,7 +142,7 @@ public class MealService {
         meal.setMyRecipeItems(new ArrayList<>());
         meal.setFoodItems(new ArrayList<>());
         dailyStatisticsService.updateRemainingCalories(userId, calories);
-        dailyStatisticsService.lowerCaloriesConsumed(userId,calories);
+        dailyStatisticsService.lowerCaloriesConsumed(userId, calories);
         mealRepository.save(meal);
     }
 

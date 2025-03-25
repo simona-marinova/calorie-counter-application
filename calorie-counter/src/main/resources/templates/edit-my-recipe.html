@@ -25,6 +25,11 @@
                 <textarea id="instructions" th:field="*{instructions}"></textarea>
                 <p class="alert-warning" th:if="${#fields.hasErrors('instructions')}" th:errors="*{instructions}"></p>
             </div>
+            <div class="form-group">
+                <label for="pictureUrl">Picture URL:</label>
+                <input type="text" id="pictureUrl" th:field="*{picture}">
+                <p class="alert-warning" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></p>
+            </div>
             <button type="submit" class="save-recipe-button">Save Changes</button>
         </form>
         <div class="food-items-table">

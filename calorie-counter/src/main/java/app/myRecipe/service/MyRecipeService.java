@@ -56,8 +56,8 @@ public class MyRecipeService {
         myRecipeItem.setQuantityInGrams(addRecipeItemRequest.getRecipeItemQuantity());
         MyRecipe myRecipe = getByUserIdAndName(userId, addRecipeItemRequest.getRecipeItemName());
         double myRecipeCaloriesPerHundredGrams = myRecipe.getCaloriesPerHundredGrams();
-        double myRecipeItemCalories = Math.round(myRecipeCaloriesPerHundredGrams * addRecipeItemRequest.getRecipeItemQuantity())*100;
-        myRecipeItem.setCalories(myRecipeItemCalories/100);
+        double myRecipeItemCalories = myRecipeCaloriesPerHundredGrams/100 * addRecipeItemRequest.getRecipeItemQuantity();
+        myRecipeItem.setCalories(Math.round(myRecipeItemCalories * 100.0) / 100.0);
         User user = userService.getById(userId);
         myRecipeItem.setUser(user);
         myRecipeItem.setMeal(meal);
@@ -79,37 +79,43 @@ public class MyRecipeService {
         }
     }
 
-    public void createNewRecipe(CreateMyRecipeRequest createMyRecipeRequest, User user) {
-        Optional<MyRecipe> optionalRecipe = myRecipeRepository.findByUserIdAndName(user.getId(), createMyRecipeRequest.getName());
+    public MyRecipe createNewRecipe(CreateMyRecipeRequest createMyRecipeRequest, UUID userId) {
+        Optional<MyRecipe> optionalRecipe = myRecipeRepository.findByUserIdAndName(userId, createMyRecipeRequest.getName());
 
-        if(optionalRecipe.isPresent()) {
+        if (optionalRecipe.isPresent()) {
             throw new MyRecipeAlreadyExistsException("Recipe with this name [%s] already exists".formatted(createMyRecipeRequest.getName()));
         }
+
+        User user = userService.getById(userId);
 
         MyRecipe myRecipe = MyRecipe.builder()
                 .name(createMyRecipeRequest.getName())
                 .instructions(createMyRecipeRequest.getInstructions())
                 .user(user)
+                .picture(createMyRecipeRequest.getPicture())
                 .foodItems(new ArrayList<>())
-                .publicRecipe(createMyRecipeRequest.isRecipePublic())
+                .publicRecipe(createMyRecipeRequest
+                        .isRecipePublic())
                 .build();
 
-        myRecipeRepository.save(myRecipe);
+        return myRecipeRepository.save(myRecipe);
 
     }
 
 
-    public void addFoodItemToRecipe(AddFoodItemRequest addFoodItemRequest, User user, MyRecipe myRecipe) {
+    public void addFoodItemToRecipe(AddFoodItemRequest addFoodItemRequest, UUID userId, UUID recipeId) {
 
+        User user = userService.getById(userId);
+        MyRecipe myRecipe = getById(recipeId);
         FoodItem foodItem = foodService.createNewFoodItemForRecipe(addFoodItemRequest, user.getId(), myRecipe);
 
-        List<FoodItem> foodItems = foodService.getFoodItemsByRecipeId(myRecipe.getId());
-        if (!foodItems.isEmpty()) {
+        List<FoodItem> foodItems = foodService.getFoodItemsByRecipeId(recipeId);
+        if (foodItems.isEmpty()) {
             foodItems = new ArrayList<>();
         }
         foodItems.add(foodItem);
         myRecipe.setFoodItems(foodItems);
-        myRecipe.setTotalCalories(myRecipe.getTotalCalories() + foodItem.getCalories());
+        myRecipe.setTotalCalories(Math.round((myRecipe.getTotalCalories() + foodItem.getCalories()) * 100.0) / 100.0);
         myRecipe.setCaloriesPerHundredGrams(calculateCaloriesPer100Grams(myRecipe));
         myRecipeRepository.save(myRecipe);
     }
@@ -118,6 +124,7 @@ public class MyRecipeService {
         MyRecipe myRecipe = getById(id);
         myRecipe.setName(editMyRecipeRequest.getName());
         myRecipe.setInstructions(editMyRecipeRequest.getInstructions());
+        myRecipe.setPicture(editMyRecipeRequest.getPicture());
         myRecipeRepository.save(myRecipe);
 
     }
@@ -158,10 +165,8 @@ public class MyRecipeService {
         if (totalWeight <= 0) {
             return 0.0;
         }
-
-        double calories = Math.round(totalCalories / totalWeight * 100);
-
-        return calories / 100;
+        double caloriesPerHundredGrams = (totalCalories / totalWeight) * 100;
+        return Math.round(caloriesPerHundredGrams * 100.0)/ 100.0;
     }
 
 

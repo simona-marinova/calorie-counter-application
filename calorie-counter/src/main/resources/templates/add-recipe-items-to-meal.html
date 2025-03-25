@@ -24,7 +24,7 @@
         </div>
         <div class="form-group">
             <label for="recipeQuantityInput">Add Recipe Quantity (Grams):</label>
-            <input th:field="*{recipeItemQuantity}" type="number" id="recipeQuantityInput" name="recipeQuantity" class="form-control"/>
+            <input th:field="*{recipeItemQuantity}" type="number" step="0.01" id="recipeQuantityInput" name="recipeQuantity" class="form-control"/>
             <p class="alert-warning" th:if="${#fields.hasErrors('recipeItemQuantity')}" th:errors ="*{recipeItemQuantity}"></p>
         </div>
         <button type="submit" name="action" value="addRecipe" class="add-recipe-button">Add Recipe</button>

@@ -50,6 +50,7 @@ public class UserController {
             return modelAndView;
         }
         userService.editUser(id, userEditRequest);
+
         return new ModelAndView("redirect:/home");
 
     }
@@ -65,6 +66,8 @@ public class UserController {
         return modelAndView;
     }
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/role")
     public String changeUserRole(@PathVariable UUID id) {
 
@@ -74,7 +77,7 @@ public class UserController {
     }
 
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/status")
     public String changeUserStatus(@PathVariable UUID id) {
 

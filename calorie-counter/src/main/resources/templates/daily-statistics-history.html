@@ -13,28 +13,36 @@
     <h1>Daily Statistics History</h1>
 </header>
 <main>
-    <div class="statistics-history-container">
-        <h2>Daily Statistics</h2>
-        <table class="statistics-table">
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Calorie Goal</th>
-                <th>Calories Consumed</th>
-                <th>Calories Burned</th>
-                <th>Weight</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="dailyStatistics: ${dailyStatisticsHistory}">
-                <td th:text ="${#temporals.format(dailyStatistics.date, 'dd MMM YYYY')}"></td>
-                <td th:text ="${dailyStatistics.calorieGoal == 0 ? '-' : dailyStatistics.calorieGoal}"></td>
-                <td th:text ="${dailyStatistics.consumedCalories == 0 ? '-' : dailyStatistics.consumedCalories}"></td>
-                <td th:text ="${dailyStatistics.burnedCaloriesDuringActivity== 0 ? '-' : dailyStatistics.burnedCaloriesDuringActivity}"></td>
-                <td th:text ="${dailyStatistics.weight == 0 ? '-' : dailyStatistics.weight}"></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="main-content">
+        <div class="image-container left-image">
+            <img src="https://media.istockphoto.com/id/1310132803/photo/healthy-diet-eating-plan-meal-planning-top-view-flat-lay-calories-counting-diet-food-control.jpg?s=612x612&w=0&k=20&c=ZF-egERHOTZB-eOySgGvC5IM3aLgo6tbV9tx_hldwpk=" alt="Healthy Food">
+        </div>
+        <div class="statistics-history-container">
+            <h2>Daily Statistics</h2>
+            <table class="statistics-table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Calorie Goal</th>
+                    <th>Calories Consumed</th>
+                    <th>Calories Burned</th>
+                    <th>Weight</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="dailyStatistics: ${dailyStatisticsHistory}">
+                    <td th:text ="${#temporals.format(dailyStatistics.date, 'dd MMM yyyy')}"></td>
+                    <td th:text ="${dailyStatistics.calorieGoal == 0 ? '-' : dailyStatistics.calorieGoal}"></td>
+                    <td th:text ="${dailyStatistics.consumedCalories == 0 ? '-' : dailyStatistics.consumedCalories}"></td>
+                    <td th:text ="${dailyStatistics.burnedCaloriesDuringActivity== 0 ? '-' : dailyStatistics.burnedCaloriesDuringActivity}"></td>
+                    <td th:text ="${dailyStatistics.weight == 0 ? '-' : dailyStatistics.weight}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="image-container right-image">
+            <img src="https://media.istockphoto.com/id/1310132803/photo/healthy-diet-eating-plan-meal-planning-top-view-flat-lay-calories-counting-diet-food-control.jpg?s=612x612&w=0&k=20&c=ZF-egERHOTZB-eOySgGvC5IM3aLgo6tbV9tx_hldwpk=" alt="Fitness">
+        </div>
     </div>
 </main>
 <footer>

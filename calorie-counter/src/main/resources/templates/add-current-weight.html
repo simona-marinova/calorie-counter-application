@@ -16,9 +16,8 @@
     <form th:action="@{'/daily-statistics/weight'}" th:method="POST" th:object="${currentWeightRequest}">
         <div class="form-group">
             <label for="currentWeight">Current Weight (kg):</label>
-            <input type="number" id="currentWeight" name="currentWeight" class="form-control" th:field="*{weight}" />
+            <input type="number" step="0.01" id="currentWeight" name="currentWeight" class="form-control" th:field="*{weight}" />
             <p class="alert-warning" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
-
         </div>
         <button type="submit">Submit</button>
     </form>

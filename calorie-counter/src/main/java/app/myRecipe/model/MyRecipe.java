@@ -21,12 +21,14 @@ public class MyRecipe {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String instructions;
 
+    @Column
+    private String picture;
 
     @Column
     private double caloriesPerHundredGrams;

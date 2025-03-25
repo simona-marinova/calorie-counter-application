@@ -30,12 +30,12 @@
         </div>
         <div class="form-group">
             <label for="height">Height (cm):</label>
-            <input type="number" id="height" class="form-control" th:field="*{height}"  />
+            <input type="number" step="0.01" id="height" class="form-control" th:field="*{height}"/>
             <p class="alert-warning" th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></p>
         </div>
         <div class="form-group">
             <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight" class="form-control" th:field="*{weight}" />
+            <input type="number" step="0.01" id="weight" class="form-control" th:field="*{weight}" />
             <p class="alert-warning" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
         </div>
         <div class="form-group">

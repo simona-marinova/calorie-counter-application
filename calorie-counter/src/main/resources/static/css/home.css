@@ -33,7 +33,7 @@ main {
 }
 
 #daily-summary {
-    background: url('https://healthcare.utah.edu/sites/g/files/zrelqx136/files/styles/billboard_tablet/public/media/images/2024/GettyImages-1457889029-healthy%20food.jpg?h=260f8b7a&itok=fsaCoKRs') no-repeat center center;
+    background: url('https://saturo.com/cdn/shop/files/kalorienrechner.jpg?v=1712585544') no-repeat center center;
     background-size: cover;
     color: white;
     padding: 1rem;
@@ -41,18 +41,11 @@ main {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
+    background-color: #FFC0CB; /* Добавете розов фон */
 }
 
 #daily-summary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 192, 203, 0.7);
-    border-radius: 5px;
-    z-index: 0;
+    /* Премахнат овърлей */
 }
 
 #daily-summary > * {
@@ -131,3 +124,5 @@ button,
 .logout-button:hover {
     background-color: #D198A2;
 }
+
+

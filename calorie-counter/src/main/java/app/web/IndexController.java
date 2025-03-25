@@ -4,7 +4,6 @@ import app.dailyStatistics.model.DailyStatistics;
 import app.dailyStatistics.service.DailyStatisticsService;
 import app.meal.model.Meal;
 import app.meal.service.MealService;
-import app.myRecipe.model.MyRecipe;
 import app.myRecipe.service.MyRecipeService;
 import app.security.AuthenticationDetails;
 import app.user.model.User;
@@ -76,10 +75,8 @@ public class IndexController {
         if (errorParam != null) {
             modelAndView.addObject("errorMessage", "Incorrect username or password!");
         }
-
         return modelAndView;
     }
-
 
     @GetMapping("/home")
     public ModelAndView getHomePage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
@@ -90,11 +87,8 @@ public class IndexController {
         mealService.createMealsForTheDay(user.getId());
         LocalDate today = LocalDate.now();
         List<Meal> meals = mealService.getMealsByUserIdAndDate(user.getId(), today);
-        modelAndView.addObject("meals", meals);
         DailyStatistics dailyStatistics = dailyStatisticsService.createDailyStatistics(authenticationDetails.getUserId());
         modelAndView.addObject("dailyStatistics", dailyStatistics);
-        List<MyRecipe> myRecipes = myRecipeService.getListOfAllRecipes();
-        modelAndView.addObject("myRecipes", myRecipes);
         return modelAndView;
     }
 

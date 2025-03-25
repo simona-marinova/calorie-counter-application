@@ -50,8 +50,7 @@ public class FoodController {
         if (bindingResult.hasErrors()) {
             return "add-food";
         }
-        User user = userService.getById(authenticationDetails.getUserId());
-        foodService.createNewFood(createFoodRequest, user);
+        foodService.createNewFood(createFoodRequest, authenticationDetails.getUserId());
 
         return "redirect:/foods";
     }

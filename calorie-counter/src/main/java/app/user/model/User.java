@@ -20,6 +20,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users_users")
 @Entity
 public class User {
 
@@ -86,13 +87,13 @@ public class User {
     private List<MyRecipe> myRecipes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Food> foods;
+    private List<Food> foods = new ArrayList<>();;
 
     @OneToMany(mappedBy = "user")
-    private List<FoodItem> foodItems;
+    private List<FoodItem> foodItems = new ArrayList<>();;
 
     @OneToMany(mappedBy = "user")
-    private List<MyRecipeItem> myRecipeItems;
+    private List<MyRecipeItem> myRecipeItems = new ArrayList<>();;
 
 
 

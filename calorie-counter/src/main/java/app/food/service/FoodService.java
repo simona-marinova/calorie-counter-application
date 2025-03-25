@@ -39,7 +39,9 @@ public class FoodService {
         return foodRepository.findAllByUserId(userId);
     }
 
-    public void createNewFood(CreateFoodRequest createFoodRequest, User user) {
+    public void createNewFood(CreateFoodRequest createFoodRequest, UUID userId) {
+
+        User user = userService.getById(userId);
 
         Optional<Food> optionalFood = foodRepository.findByUserIdAndName(user.getId(), createFoodRequest.getName());
         if (optionalFood.isPresent()) {
@@ -73,6 +75,13 @@ public class FoodService {
     }
 
     public FoodItem createNewFoodItemForMeal(AddFoodItemRequest addFoodItemRequest, UUID userId, Meal meal) {
+
+        Optional<Food> optionalFood = foodRepository.findByUserIdAndName(userId, addFoodItemRequest.getFoodItemName());
+        if (optionalFood.isEmpty()) {
+            throw new DomainException("Food with this name [%s] not found".formatted(addFoodItemRequest.getFoodItemName()));
+        }
+
+
         FoodItem foodItem = new FoodItem();
         foodItem.setName(addFoodItemRequest.getFoodItemName());
         foodItem.setQuantityInGrams(addFoodItemRequest.getFoodItemQuantity());
@@ -88,7 +97,10 @@ public class FoodService {
     }
 
     public FoodItem createNewFoodItemForRecipe(AddFoodItemRequest addFoodItemRequest, UUID userId, MyRecipe myRecipe) {
-
+        Optional<Food> optionalFood = foodRepository.findByUserIdAndName(userId, addFoodItemRequest.getFoodItemName());
+        if (optionalFood.isEmpty()) {
+            throw new DomainException("Food with this name [%s] not found".formatted(addFoodItemRequest.getFoodItemName()));
+        }
         Optional<FoodItem> optionalFoodItem = foodItemRepository.findByMyRecipeIdAndName(myRecipe.getId(), addFoodItemRequest.getFoodItemName());
         if (optionalFoodItem.isPresent() && optionalFoodItem.get().getQuantityInGrams() == addFoodItemRequest.getFoodItemQuantity()) {
             throw new FoodItemAlreadyExistsException("Food item with name [%s] and quantity [%s] is already added in this recipe".formatted(addFoodItemRequest.getFoodItemName(), addFoodItemRequest.getFoodItemQuantity()));
@@ -124,9 +136,11 @@ public class FoodService {
     }
 
     public void deleteListOfFoodItems(List<FoodItem> foodItems) {
-        for (FoodItem foodItem : foodItems) {
-            UUID foodId = foodItem.getId();
-            foodItemRepository.deleteById(foodId);
+        if (foodItems != null) {
+            for (FoodItem foodItem : foodItems) {
+                UUID foodId = foodItem.getId();
+                foodItemRepository.deleteById(foodId);
+            }
         }
     }
 
@@ -143,5 +157,8 @@ public class FoodService {
         foodItemRepository.deleteById(foodItemId);
     }
 
+    public List<Food> getAllFoods() {
+        return foodRepository.findAll();
+    }
 }
 

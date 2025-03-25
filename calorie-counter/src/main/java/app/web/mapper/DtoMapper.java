@@ -35,10 +35,11 @@ public class DtoMapper {
                 .build();
     }
 
-    public static Object mapMyRecipeToEditMyRecipeRequest(MyRecipe myRecipe) {
+    public static EditMyRecipeRequest mapMyRecipeToEditMyRecipeRequest(MyRecipe myRecipe) {
         return EditMyRecipeRequest.builder()
                 .name(myRecipe.getName())
                 .instructions(myRecipe.getInstructions())
+                .picture(myRecipe.getPicture())
                 .build();
     }
 }

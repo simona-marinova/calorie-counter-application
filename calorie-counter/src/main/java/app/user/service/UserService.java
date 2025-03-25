@@ -62,7 +62,7 @@ public class UserService implements UserDetailsService {
     }
 
 
-    private User initializeUser(RegisterRequest registerRequest) {
+    public User initializeUser(RegisterRequest registerRequest) {
         return User.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
@@ -141,6 +141,11 @@ public class UserService implements UserDetailsService {
 
     public List<User> getAllActiveUsers() {
         return userRepository.findAll().stream().filter(User::isActive).toList();
+    }
+
+
+    public User getByUsername(String username){
+       return userRepository.findByUsername(username).orElseThrow(() -> new DomainException("User with username [%s] does not exist.".formatted(username)));
     }
 }
 

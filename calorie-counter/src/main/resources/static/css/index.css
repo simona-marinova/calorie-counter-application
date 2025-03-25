@@ -46,6 +46,13 @@ input {
     border-radius: 3px;
 }
 
+img {
+    max-width: 70%;
+    height: auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
 .buttons {
     margin-top: 30px;
     margin-bottom: 30px;
@@ -64,4 +71,3 @@ input {
 .button:hover {
     background-color: #82B12F;
 }
-

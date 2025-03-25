@@ -63,8 +63,7 @@ public class MyRecipeController {
         if (bindingResult.hasErrors()) {
             return "add-my-recipe";
         }
-        User user = userService.getById(authenticationDetails.getUserId());
-        myRecipeService.createNewRecipe(createMyRecipeRequest, user);
+        myRecipeService.createNewRecipe(createMyRecipeRequest, authenticationDetails.getUserId());
 
         return "redirect:/my-recipes";
     }
@@ -96,7 +95,7 @@ public class MyRecipeController {
         }
         MyRecipe myRecipe = myRecipeService.getById(id);
         User user = userService.getById(authenticationDetails.getUserId());
-        myRecipeService.addFoodItemToRecipe(addFoodItemRequest, user, myRecipe);
+        myRecipeService.addFoodItemToRecipe(addFoodItemRequest, authenticationDetails.getUserId(), myRecipe.getId());
 
         return new ModelAndView("redirect:/my-recipes/{id}/add-food-items");
     }

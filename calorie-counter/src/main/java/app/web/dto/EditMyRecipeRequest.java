@@ -2,11 +2,16 @@ package app.web.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class EditMyRecipeRequest {
 
     @NotBlank(message = "Name of the recipe cannot be blank")
@@ -15,5 +20,8 @@ public class EditMyRecipeRequest {
 
     @Size(max = 1000, message = "Instructions cannot exceed 1000 characters")
     private String instructions;
+
+    @URL(message = "Must contain a valid URL.")
+    private String picture;
 
 }

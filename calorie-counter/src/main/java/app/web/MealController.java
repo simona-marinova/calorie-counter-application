@@ -7,8 +7,6 @@ import app.meal.service.MealService;
 import app.myRecipe.model.MyRecipe;
 import app.myRecipe.service.MyRecipeService;
 import app.security.AuthenticationDetails;
-import app.user.model.User;
-import app.user.service.UserService;
 import app.web.dto.AddFoodItemRequest;
 import app.web.dto.AddRecipeItemRequest;
 import jakarta.validation.Valid;
@@ -27,14 +25,12 @@ import java.util.UUID;
 @RequestMapping("/meals")
 public class MealController {
 
-    private final UserService userService;
     private final MealService mealService;
     private final FoodService foodService;
     private final MyRecipeService myRecipeService;
 
     @Autowired
-    public MealController(UserService userService, MealService mealService, FoodService foodService, MyRecipeService myRecipeService) {
-        this.userService = userService;
+    public MealController(MealService mealService, FoodService foodService, MyRecipeService myRecipeService) {
         this.mealService = mealService;
         this.foodService = foodService;
         this.myRecipeService = myRecipeService;

@@ -16,4 +16,6 @@ public interface MyRecipeRepository extends JpaRepository<MyRecipe, UUID> {
     List<MyRecipe> findAllByPublicRecipe(boolean publicRecipe);
 
     List<MyRecipe> findAllByUserId(UUID userId);
+
+   Optional<MyRecipe> findByName(String name);
 }

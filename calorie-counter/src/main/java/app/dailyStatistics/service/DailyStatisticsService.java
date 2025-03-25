@@ -103,11 +103,10 @@ public class DailyStatisticsService {
     public DailyStatistics createDailyStatistics(UUID userId) {
         LocalDate today = LocalDate.now();
         User user = userService.getById(userId);
-
         Optional<DailyStatistics> optionalDailyStatistics = dailyStatisticsRepository.findByDateAndUserId(today, userId);
 
-        if (optionalDailyStatistics.isEmpty()) {
-            DailyStatistics dailyStatistics = new DailyStatistics();
+       if (optionalDailyStatistics.isEmpty()) {
+           DailyStatistics dailyStatistics = new DailyStatistics();
             dailyStatistics.setDate(today);
             dailyStatistics.setUser(user);
             dailyStatistics.setBurnedCaloriesDuringActivity(0.00);
@@ -122,11 +121,13 @@ public class DailyStatisticsService {
             }
             if(optionalDailyStatisticsYesterday.isPresent() && optionalDailyStatisticsYesterday.get().getBurnedCaloriesAtRest()!=0.00){
                 dailyStatistics.setBurnedCaloriesAtRest(optionalDailyStatisticsYesterday.get().getBurnedCaloriesAtRest());
+
             }
-            dailyStatisticsRepository.save(dailyStatistics);
+           dailyStatisticsRepository.save(dailyStatistics);
         }
 
-        return dailyStatisticsRepository.findByDateAndUserId(today, userId).get();
+     return dailyStatisticsRepository.findByDateAndUserId(today, userId).get();
+
     }
 
 
