@@ -1,6 +1,6 @@
 package app.exception;
 
-public class UsernameAlreadyExistsException extends  RuntimeException{
+public class UsernameAlreadyExistsException extends RuntimeException{
 
     public UsernameAlreadyExistsException() {
     }

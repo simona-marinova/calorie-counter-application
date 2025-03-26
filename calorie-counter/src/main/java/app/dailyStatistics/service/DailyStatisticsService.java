@@ -1,5 +1,6 @@
 package app.dailyStatistics.service;
 
+import app.consumedCaloriesTracking.ConsumedCaloriesTrackingService;
 import app.dailyStatistics.model.DailyStatistics;
 import app.dailyStatistics.repository.DailyStatisticsRepository;
 import app.exception.DomainException;
@@ -10,7 +11,9 @@ import app.user.service.UserService;
 import app.web.dto.CalculateCalorieRequest;
 import app.web.dto.CaloriesBurnedRequest;
 import app.web.dto.CurrentWeightRequest;
+import app.web.dto.DailyCalorieGoalExceededEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,12 +28,16 @@ public class DailyStatisticsService {
 
     private final DailyStatisticsRepository dailyStatisticsRepository;
     private final UserService userService;
+    private final ApplicationEventPublisher eventPublisher;
+    private final ConsumedCaloriesTrackingService consumedCaloriesTrackingService;
 
 
     @Autowired
-    public DailyStatisticsService(DailyStatisticsRepository dailyStatisticsRepository, UserService userService) {
+    public DailyStatisticsService(DailyStatisticsRepository dailyStatisticsRepository, UserService userService, ApplicationEventPublisher eventPublisher, ConsumedCaloriesTrackingService consumedCaloriesTrackingService) {
         this.dailyStatisticsRepository = dailyStatisticsRepository;
         this.userService = userService;
+        this.eventPublisher = eventPublisher;
+        this.consumedCaloriesTrackingService = consumedCaloriesTrackingService;
     }
 
     public void calculateCalorieGoalAndCaloriesAtRest(CalculateCalorieRequest calculateCalorieRequest, UUID userId) {
@@ -136,6 +143,17 @@ public class DailyStatisticsService {
         DailyStatistics dailyStatistics = getDailyStatisticsByDateAndUserId(LocalDate.now(), userId);
         double consumedCalories = dailyStatistics.getConsumedCalories() + calories;
         dailyStatistics.setConsumedCalories(Math.round(consumedCalories * 100.0) / 100.0);
+
+        if(consumedCalories>dailyStatistics.getCalorieGoal()){
+            DailyCalorieGoalExceededEvent event = DailyCalorieGoalExceededEvent.builder()
+                    .userId(userId)
+                    .exceededCalories((Math.round(consumedCalories-dailyStatistics.getCalorieGoal()) * 100.0) / 100.0)
+                    .message("User with id [%s] with daily calorie goal [%.2f] exceeded daily calorie goal with [%.2f] calories.".formatted(userId, dailyStatistics.getCalorieGoal(), (Math.round(consumedCalories-dailyStatistics.getCalorieGoal()) * 100.0) / 100.0))
+                    .date(dailyStatistics.getDate())
+                    .build();
+            eventPublisher.publishEvent(event);
+        }
+
         double dailyCaloriesRemaining = dailyStatistics.getCalorieGoal() - dailyStatistics.getConsumedCalories();
         if (dailyCaloriesRemaining < 0) {
             dailyCaloriesRemaining = 0;
