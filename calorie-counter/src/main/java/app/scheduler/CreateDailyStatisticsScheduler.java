@@ -20,9 +20,7 @@ public class CreateDailyStatisticsScheduler {
     }
 
 
-    //тук трябва да има една звезда отпред за да работи да проверя дали е така
     @Scheduled(cron = "0 0 0 * * *")
-    // @Scheduled(cron = "0 50 7 * * *")
     public void createDailyStatisticsForTheDay() {
         List<User> allUsers = userService.getAllActiveUsers();
         for (User user : allUsers) {

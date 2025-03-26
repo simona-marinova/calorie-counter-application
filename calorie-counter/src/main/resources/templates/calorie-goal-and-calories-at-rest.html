@@ -15,7 +15,7 @@
 <main>
     <div class="main-content">
         <div class="image-container left-image">
-            <img src="https://thumbs.dreamstime.com/b/phone-app-counting-calories-photos-smartphone-calorie-calculator-concept-icons-banners-web-mobile-design-108723150.jpg">
+            <img src="https://thumbs.dreamstime.com/b/phone-app-counting-calories-photos-smartphone-calorie-calculator-concept-icons-banners-web-mobile-design-108723150.jpg" alt="Left image">
         </div>
         <div class="edit-profile-container">
             <form th:action="@{'/daily-statistics/' + ${id} + '/calorie-goal-and-calories-at-rest'}" th:method="POST" th:object="${calculateCalorieRequest}">

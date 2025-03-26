@@ -22,9 +22,8 @@ public class CreateMealsScheduler {
         this.mealService = mealService;
     }
 
-    //тук трябва да има една звезда отпред за да работи да проверя дали е така
+
     @Scheduled(cron = "0 0 0 * * *")
-   // @Scheduled(cron = "0 50 7 * * *")
     public void createMealsForTheDay() {
         List<User> allUsers = userService.getAllActiveUsers();
         for (User user : allUsers) {

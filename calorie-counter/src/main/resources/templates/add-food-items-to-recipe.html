@@ -13,9 +13,7 @@
     <h1>Add Food Items To Recipe</h1>
 </header>
 <main>
-
     <form id="recipeForm" th:action="@{'/my-recipes/'+ ${myRecipe.id} + '/add-food-items'}" th:method="PUT" th:object="${addFoodItemRequest}">
-
     <div class="form-group">
             <label for="foodSelect">Select Food:</label>
             <select th:field="*{foodItemName}" id="foodSelect" name="foodName" class="form-control">
@@ -32,8 +30,6 @@
         </div>
         <button type="submit" name="action" value="addFood" class="add-food-button">Add Food</button>
         <a th:href="@{/my-recipes}" class="save-recipe-button">Save Recipe</a> </form>
-
-    </form>
     <div>
         <h2>Added Food Items:</h2>
         <p th:if="${myRecipe.foodItems == null || myRecipe.foodItems.isEmpty()}">No food items added.</p>
