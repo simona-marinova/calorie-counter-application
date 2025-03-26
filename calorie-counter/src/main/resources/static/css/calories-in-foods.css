@@ -81,3 +81,15 @@ th:first-child, td:first-child {
 th:nth-child(2), td:nth-child(2) {
     width: 40%;
 }
+main::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://mir-s3-cdn-cf.behance.net/projects/404/d85aa9196328127.Y3JvcCwzMDIwLDIzNjIsMTA0LDE0OQ.png');
+    background-repeat: repeat;
+    z-index: -1;
+    pointer-events: none;
+}

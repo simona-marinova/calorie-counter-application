@@ -10,13 +10,27 @@ body {
 }
 
 .container {
-    width: 80%;
+    width: 60%;
     margin: 20px auto;
     background-color: #FFC0CB;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex: 1;
+    position: relative;
+}
+
+.container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://mir-s3-cdn-cf.behance.net/projects/404/d85aa9196328127.Y3JvcCwzMDIwLDIzNjIsMTA0LDE0OQ.png');
+    background-repeat: repeat;
+    z-index: -1;
+    pointer-events: none;
 }
 
 h1, h2, h3 {

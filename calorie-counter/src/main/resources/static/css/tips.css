@@ -1,5 +1,6 @@
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -10,13 +11,27 @@ body {
 }
 
 main {
-    width: 80%;
+    width: 60%;
     margin: 20px auto;
     background-color: #FFC0CB;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-grow: 1;
+    position: relative;
+}
+
+main::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://mir-s3-cdn-cf.behance.net/projects/404/d85aa9196328127.Y3JvcCwzMDIwLDIzNjIsMTA0LDE0OQ.png');
+    background-repeat: repeat;
+    z-index: -1;
+    pointer-events: none;
 }
 
 h2 {

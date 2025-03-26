@@ -41,11 +41,10 @@ main {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
-    background-color: #FFC0CB; /* Добавете розов фон */
+    background-color: #FFC0CB;
 }
 
 #daily-summary::before {
-    /* Премахнат овърлей */
 }
 
 #daily-summary > * {

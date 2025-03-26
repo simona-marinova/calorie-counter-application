@@ -7,6 +7,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-image: url('https://c8.alamy.com/comp/J7Y9E8/illustration-balance-diet-overweight-cartoon-slim-thick-wide-fat-arid-J7Y9E8.jpg');
+    background-size: contain;
+    background-position: center;
 }
 
 main {

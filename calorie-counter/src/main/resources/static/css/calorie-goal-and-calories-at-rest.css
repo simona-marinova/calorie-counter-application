@@ -13,54 +13,89 @@ main {
     padding: 2rem;
     flex: 1;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
-form {
-    width: 400px;
-    padding: 30px;
+.main-content {
+    background-color: #FFC0CB;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: stretch;
+}
+
+.edit-profile-container {
     background-color: white;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 90%;
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    background-color: #FFC0CB;
+    padding: 10px 0;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
+    text-align: left;
 }
 
 label {
     display: block;
-    margin-bottom: 0.75rem;
+    margin-bottom: 5px;
 }
 
-.form-control {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
+    border-radius: 3px;
+    box-sizing: border-box;
 }
 
 button {
-    padding: 0.75rem 1.5rem;
     background-color: #9ACD32;
-    color: #fff;
+    color: white;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
     cursor: pointer;
-    margin-right: 0.5rem;
-    font-size: 1rem;
+    display: block;
+    margin: 20px auto 0;
 }
 
 button:hover {
     background-color: #82B12F;
 }
 
+a {
+    color: white;
+    text-decoration: none;
+}
+
 .result {
     margin-top: 20px;
-    padding: 15px;
-    background-color: white;
-    border-radius: 5px;
     text-align: center;
 }
+

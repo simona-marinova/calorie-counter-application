@@ -1,5 +1,3 @@
-
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -14,6 +12,7 @@
     <h1>Add Activity</h1>
 </header>
 <main>
+
     <form th:action="@{'/activities/new'}" th:method="POST" th:object="${caloriesBurnedRequest}">
         <div class="form-group">
             <label for="duration">Duration (minutes):</label>
@@ -32,13 +31,14 @@
             <p class="alert-warning" th:if="${#fields.hasErrors('activityType')}" th:errors="*{activityType}"></p>
         </div>
         <button type="submit">Calculate Burned Calories</button>
-        <a th:href="@{/home}" class="save-button">Save</a> </form>
+        <a th:href="@{/home}" class="save-button">Save</a>
+        <div class="result">
+            <h3>Calories Burned:</h3>
+            <p th:if="${calories != null}" th:text="${calories} + ' calories'"></p>
+            <p th:unless="${calories != null}">No calories calculated yet.</p>
+        </div>
     </form>
-    <div class="result">
-        <h3>Calories Burned:</h3>
-        <p th:if="${calories != null}" th:text="${calories} + ' calories'"></p>
-        <p th:unless="${calories != null}">No calories calculated yet.</p>
-    </div>
+
 </main>
 <footer>
     <p>&copy; 2025 Calorie Counter. All rights reserved.</p>

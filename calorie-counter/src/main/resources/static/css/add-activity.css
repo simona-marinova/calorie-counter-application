@@ -7,6 +7,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-image: url("https://static.vecteezy.com/system/resources/previews/039/345/426/non_2x/people-in-gym-man-and-woman-exercising-on-training-apparatus-doing-different-sport-activities-male-characters-having-workout-vector.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 main {
@@ -24,6 +28,10 @@ form {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .form-group {
@@ -35,7 +43,8 @@ label {
     margin-bottom: 0.5rem;
 }
 
-input[type="number"], select {
+input[type="number"],
+select {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid #ccc;
@@ -43,23 +52,41 @@ input[type="number"], select {
     color: #333;
 }
 
-button, .save-button {
+button,
+.save-button {
     padding: 0.5rem 1rem;
     background-color: #9ACD32;
-    color: #fff;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
-    margin-right: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
     text-decoration: none;
+    align-self: center;
+    margin-top: 1rem;
 }
 
-button:hover, .save-button:hover {
+button:hover,
+.save-button:hover {
     background-color: #82B12F;
 }
 
 .result {
     margin-top: 20px;
     text-align: center;
+    width: 100%;
+}
+
+.activity-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.result {
+    margin-top: auto;
+    text-align: center;
+    width: 100%;
 }
