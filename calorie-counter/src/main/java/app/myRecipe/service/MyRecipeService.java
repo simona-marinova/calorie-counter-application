@@ -56,7 +56,7 @@ public class MyRecipeService {
         myRecipeItem.setQuantityInGrams(addRecipeItemRequest.getRecipeItemQuantity());
         MyRecipe myRecipe = getByUserIdAndName(userId, addRecipeItemRequest.getRecipeItemName());
         double myRecipeCaloriesPerHundredGrams = myRecipe.getCaloriesPerHundredGrams();
-        double myRecipeItemCalories = myRecipeCaloriesPerHundredGrams/100 * addRecipeItemRequest.getRecipeItemQuantity();
+        double myRecipeItemCalories = myRecipeCaloriesPerHundredGrams / 100 * addRecipeItemRequest.getRecipeItemQuantity();
         myRecipeItem.setCalories(Math.round(myRecipeItemCalories * 100.0) / 100.0);
         User user = userService.getById(userId);
         myRecipeItem.setUser(user);
@@ -166,7 +166,7 @@ public class MyRecipeService {
             return 0.0;
         }
         double caloriesPerHundredGrams = (totalCalories / totalWeight) * 100;
-        return Math.round(caloriesPerHundredGrams * 100.0)/ 100.0;
+        return Math.round(caloriesPerHundredGrams * 100.0) / 100.0;
     }
 
 
@@ -180,6 +180,13 @@ public class MyRecipeService {
         myRecipeRepository.deleteById(id);
     }
 
+    public List<MyRecipe> searchMyRecipes(UUID userId, String keyword) {
+        if (keyword != null && !keyword.isEmpty()) {
+            return myRecipeRepository.findByUserIdAndNameContainingIgnoreCase(userId, keyword);
+        } else {
+            return new ArrayList<>();
+        }
+    }
 
     public MyRecipe getById(UUID id) {
         return myRecipeRepository.findById(id).orElseThrow(() -> new DomainException("Recipe with id [%s] does not exist.".formatted(id)));

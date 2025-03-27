@@ -54,7 +54,8 @@ a {
 }
 
 .recipe-item a.edit-recipe-button,
-.recipe-item a.read-recipe-button {
+.recipe-item a.read-recipe-button,
+.results{
     display: inline-block;
     padding: 8px 12px;
     background-color: #9ACD32;
@@ -121,3 +122,48 @@ a {
 }
 
 
+
+.search-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+header {
+    position: relative;
+}
+
+.search-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+header {
+    position: relative;
+}
+
+.search-container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding-right: 0;
+}
+
+header h1 {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.results {
+    margin-top: 20px;
+}
+
+.no-results {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}

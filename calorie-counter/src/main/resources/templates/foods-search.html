@@ -9,20 +9,16 @@
 </head>
 <body>
 <header>
-    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <a th:href="@{/foods}" class="back-to-home-button">Back to Foods</a>
     <h1>Foods</h1>
-    <div class="search-container">
-        <form th:action="@{/foods/search}" th:method="GET">
-            <label for="search">Search foods:</label>
-            <input type="text" id="search" name="keyword" placeholder="Search foods...">
-            <button type="submit">Search</button>
-        </form>
-    </div>
 </header>
 <main>
     <a th:href="@{/foods/new}" class="add-food-button">Add Food</a>
     <div class="food-container">
-        <div th:each="food : ${foods}" class="food-item">
+        <div th:if="${#lists.isEmpty(matchingFoods)}" class="no-results">
+            <p>No foods found matching your search criteria.</p>
+        </div>
+        <div th:unless="${#lists.isEmpty(matchingFoods)}" th:each="food : ${matchingFoods}"  class="food-item">
             <h2 th:text="${food.name}"></h2>
             <img th:if="${food.picture}" th:src="${food.picture}" alt="Food Picture" class="food-image">
             <p>Calories: <span th:text="${food.caloriesPerHundredGrams}"></span></p>

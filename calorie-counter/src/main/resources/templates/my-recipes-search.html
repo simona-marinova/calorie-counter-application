@@ -9,7 +9,7 @@
 </head>
 <body>
 <header>
-    <a th:href="@{/home}" class="back-to-home-button">Back to Home</a>
+    <a th:href="@{/my-recipes}" class="back-to-home-button">Back to My Recipes</a>
     <h1>My Recipes</h1>
     <a th:href="@{/my-recipes/new}" class="add-recipe-button">Add Recipe</a>
     <a th:href="@{/my-recipes/public-recipes}" class="recipe-suggestions-button">View Recipe Suggestions</a>
@@ -23,15 +23,21 @@
 </header>
 <main>
     <div class="recipes-container">
-        <div th:each="myRecipe : ${myRecipes}" class="recipe-item">
+        <div th:if="${#lists.isEmpty(matchingRecipes)}" class="no-results">
+            <p>No recipes found matching your search criteria.</p>
+        </div>
+        <div th:unless="${#lists.isEmpty(matchingRecipes)}"  th:each="myRecipe : ${matchingRecipes}" class="recipe-item">
             <h2><span th:text="${myRecipe.name}"></span></h2>
-            <img th:if="${myRecipe.picture != null and !myRecipe.picture.isEmpty()}" th:src="${myRecipe.picture}" alt="Recipe Picture" class="recipe-picture">
+            <img th:if="${myRecipe.picture != null and !myRecipe.picture.isEmpty()}"
+                 th:src="${myRecipe.picture}" alt="Recipe Picture" class="recipe-picture">
             <p>All Calories: <span th:text="${myRecipe.totalCalories}"></span></p>
             <p>Calories per 100 grams: <span th:text="${myRecipe.caloriesPerHundredGrams}"></span></p>
-            <a th:href="@{'/my-recipes/' + ${myRecipe.id} +'/add-food-items'}" class="edit-recipe-button">Add Food Items</a>
+            <a th:href="@{'/my-recipes/' + ${myRecipe.id} + '/add-food-items'}"
+               class="edit-recipe-button">Add Food Items</a>
             <a th:href="@{'/my-recipes/' + ${myRecipe.id} + '/edit'}" class="edit-recipe-button">Edit Recipe</a>
             <div class="view-delete-buttons">
-                <a th:href="@{'/my-recipes/' + ${myRecipe.id} + '/view'}" class="read-recipe-button">View Recipe</a>
+                <a th:href="@{'/my-recipes/' + ${myRecipe.id} + '/view'}" class="read-recipe-button">
+                    View Recipe</a>
                 <form th:action="@{'/my-recipes/' + ${myRecipe.id} + '/delete'}" method="post">
                     <input type="hidden" name="_method" value="delete">
                     <button class="delete-recipe-button">Delete Recipe</button>

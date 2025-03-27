@@ -13,4 +13,5 @@ public interface DailyStatisticsRepository extends JpaRepository<DailyStatistics
     Optional<DailyStatistics> findByDateAndUserId(LocalDate date, UUID userId);
 
     List<DailyStatistics> findAllByUserIdOrderByDateDesc(UUID userId);
+
 }

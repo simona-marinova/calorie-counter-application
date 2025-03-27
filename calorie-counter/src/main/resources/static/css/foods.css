@@ -103,3 +103,35 @@ a {
 .add-food-button:hover {
     background-color: #82B12F;
 }
+
+.search-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+header {
+    position: relative;
+}
+
+.search-container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding-right: 0;
+    margin-top: 0.5rem;
+}
+
+header h1 {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.no-results {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}

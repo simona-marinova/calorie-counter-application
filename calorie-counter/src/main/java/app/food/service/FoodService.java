@@ -18,6 +18,7 @@ import app.web.dto.FoodEditRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -159,6 +160,14 @@ public class FoodService {
 
     public List<Food> getAllFoods() {
         return foodRepository.findAll();
+    }
+
+    public List<Food> searchFoods(UUID userId, String keyword) {
+        if (keyword != null && !keyword.isEmpty()) {
+            return foodRepository.findByUserIdAndNameContainingIgnoreCase(userId, keyword);
+        } else {
+            return new ArrayList<>();
+        }
     }
 }
 

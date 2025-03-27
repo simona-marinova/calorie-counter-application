@@ -18,4 +18,6 @@ public interface MyRecipeRepository extends JpaRepository<MyRecipe, UUID> {
     List<MyRecipe> findAllByUserId(UUID userId);
 
    Optional<MyRecipe> findByName(String name);
+
+    List<MyRecipe> findByUserIdAndNameContainingIgnoreCase(UUID userId, String keyword);
 }

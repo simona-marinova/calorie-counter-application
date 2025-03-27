@@ -2,6 +2,7 @@ package app.web;
 
 import app.food.model.Food;
 import app.food.service.FoodService;
+import app.myRecipe.model.MyRecipe;
 import app.security.AuthenticationDetails;
 import app.user.model.User;
 import app.user.service.UserService;
@@ -102,4 +103,13 @@ public class FoodController {
 
     }
 
+
+    @GetMapping("/search")
+    public ModelAndView searchFoods(@RequestParam(name = "keyword", required = false) String keyword, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("foods-search");
+        List<Food> matchingFoods = foodService.searchFoods(authenticationDetails.getUserId(), keyword);
+        modelAndView.addObject("matchingFoods", matchingFoods);
+        return modelAndView;
+    }
 }

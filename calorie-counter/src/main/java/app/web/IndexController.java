@@ -28,14 +28,12 @@ public class IndexController {
 
     private final UserService userService;
     private final MealService mealService;
-    private final MyRecipeService myRecipeService;
     private final DailyStatisticsService dailyStatisticsService;
 
     @Autowired
-    public IndexController(UserService userService, MealService mealService, MyRecipeService myRecipeService, DailyStatisticsService dailyStatisticsService) {
+    public IndexController(UserService userService, MealService mealService, DailyStatisticsService dailyStatisticsService) {
         this.userService = userService;
         this.mealService = mealService;
-        this.myRecipeService = myRecipeService;
         this.dailyStatisticsService = dailyStatisticsService;
     }
 
@@ -56,12 +54,13 @@ public class IndexController {
 
 
     @PostMapping("/register")
-    public String processRegisterRequest(@Valid RegisterRequest registerRequest, BindingResult bindingResult) {
+    public String processRegisterRequest(@Valid RegisterRequest registerRequest, BindingResult bindingResult, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         if (bindingResult.hasErrors()) {
             return "register";
         }
         userService.register(registerRequest);
-
+        mealService.createMealsForTheDay(authenticationDetails.getUserId());
+        dailyStatisticsService.createDailyStatistics(authenticationDetails.getUserId());
         return "redirect:/login";
     }
 

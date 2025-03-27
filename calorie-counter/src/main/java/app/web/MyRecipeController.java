@@ -163,4 +163,15 @@ public class MyRecipeController {
     }
 
 
+    @GetMapping("/search")
+    public ModelAndView searchRecipes(@RequestParam(name = "keyword", required = false) String keyword, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("my-recipes-search");
+        List<MyRecipe> matchingRecipes = myRecipeService.searchMyRecipes(authenticationDetails.getUserId(), keyword);
+        modelAndView.addObject("matchingRecipes", matchingRecipes);
+        return modelAndView;
+    }
 }
+
+
+
