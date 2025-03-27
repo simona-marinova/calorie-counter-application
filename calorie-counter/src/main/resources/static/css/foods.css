@@ -9,7 +9,7 @@ body {
     min-height: 100vh;
 }
 
-main {
+main{
     padding: 2rem;
     flex: 1;
     display: flex;
@@ -17,7 +17,8 @@ main {
     align-items: center;
 }
 
-.food-container {
+
+.food-container{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -25,7 +26,8 @@ main {
     width: 80%;
 }
 
-.food-item {
+
+.food-item{
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -34,19 +36,23 @@ main {
     text-align: center;
 }
 
-.food-image {
+
+.food-image{
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
     border-radius: 4px;
+
 }
 
-a {
+a{
     color: white;
     text-decoration: none;
+
 }
 
-.edit-button {
+
+.edit-button{
     display: inline-block;
     padding: 8px 16px;
     background-color: #9ACD32;
@@ -54,13 +60,17 @@ a {
     text-decoration: none;
     border-radius: 4px;
     margin-top: 10px;
+
 }
+
 
 .edit-button:hover {
     background-color: #82B12F;
+
 }
 
-.add-food-button {
+
+.add-food-button{
     position: absolute;
     top: 20px;
     left: 20px;
@@ -70,9 +80,11 @@ a {
     text-decoration: none;
     border-radius: 4px;
     font-size: 16px;
+
 }
 
-.delete-button {
+
+.delete-button{
     display: inline-block;
     padding: 8px 16px;
     background-color: #9ACD32;
@@ -81,13 +93,17 @@ a {
     border-radius: 4px;
     margin-top: 10px;
     cursor: pointer;
+
 }
+
 
 .delete-button:hover {
     background-color: #82B12F;
+
 }
 
-.add-food-button {
+
+.add-food-button{
     display: inline-block;
     padding: 10px 20px;
     background-color: #9ACD32;
@@ -98,40 +114,58 @@ a {
     position: absolute;
     top: 125px;
     left: 20px;
+
 }
+
 
 .add-food-button:hover {
     background-color: #82B12F;
+
 }
 
-.search-container {
+
+.search-container{
     display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
+
 }
 
-header {
+header{
     position: relative;
+
 }
 
-.search-container {
+
+.search-container{
     position: absolute;
     top: 100%;
     right: 0;
     padding-right: 0;
     margin-top: 0.5rem;
+
 }
 
-header h1 {
+h1 {
     margin-right: auto;
     margin-left: 0;
+
 }
 
-.no-results {
+
+.no-results{
     text-align: center;
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 200px;
+
+}
+
+.food-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 4px;
 }

@@ -53,6 +53,14 @@ a {
     text-align: center;
 }
 
+.recipe-item img.recipe-picture {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+
 .recipe-item a.edit-recipe-button,
 .recipe-item a.read-recipe-button,
 .results{
@@ -133,10 +141,13 @@ header {
     position: relative;
 }
 
-.search-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
+.search-container{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding-right: 0;
+    margin-top: 0.5rem;
+
 }
 
 header {

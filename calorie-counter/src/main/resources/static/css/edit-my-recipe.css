@@ -9,7 +9,20 @@ body {
     min-height: 100vh;
 }
 
+body {
+    background-image: url('https://png.pngtree.com/png-clipart/20240621/original/pngtree-green-cuisine-exploring-the-flavors-of-vegetables-in-this-cookbook-png-image_15379542.png');
+    background-repeat: repeat;
+    background-position: left top;
+    background-size: auto 50%;
+}
 
+.container {
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 20px;
+    min-height: 200px;
+}
 main {
     padding: 2rem;
     flex: 1;
@@ -17,6 +30,7 @@ main {
     justify-content: center;
     align-items: center;
 }
+
 
 .edit-recipe-container {
     background-color: white;
