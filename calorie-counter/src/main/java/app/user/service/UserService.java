@@ -53,6 +53,7 @@ public class UserService implements UserDetailsService {
         }
 
         User user = initializeUser(registerRequest);
+
         userRepository.save(user);
 
         log.info("Successfully created new user account for username [%s] with id [%s]"

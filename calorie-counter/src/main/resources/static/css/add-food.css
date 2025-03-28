@@ -1,5 +1,5 @@
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: sans-serif;
     margin: 0;
     padding: 0;
     background-color: #FFC0CB;
@@ -7,6 +7,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-image: url('https://www.nkch.org/sites/default/files/hg_features/hg_post/266431ee48ecd33198166e1f775e6eff.jpg');
+    background-size: 90% auto;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 

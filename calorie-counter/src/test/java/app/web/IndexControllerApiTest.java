@@ -96,7 +96,6 @@ public class IndexControllerApiTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
         verify(userService, times(1)).register(any());
-
     }
 
         @Test

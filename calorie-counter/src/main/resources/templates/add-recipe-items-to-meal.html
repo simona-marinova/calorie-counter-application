@@ -13,24 +13,27 @@
     <h1>Add Recipe Items To Meal</h1>
 </header>
 <main>
-    <form id="mealForm" th:action="@{'/meals/'+ ${meal.id} + '/add-recipe-items'}" th:method="PUT" th:object="${addRecipeItemRequest}">
-        <div class="form-group">
-            <label for="recipeSelect">Select Recipe:</label>
-            <select th:field="*{recipeItemName}" id="recipeSelect" name="recipeName" class="form-control">
-                <option value="">Select recipe</option>
-                <option th:each="recipe : ${myRecipes}" th:value="${recipe.name}" th:text="${recipe.name}"></option>
-            </select>
-            <p class="alert-warning" th:if="${#fields.hasErrors('recipeItemName')}" th:errors ="*{recipeItemName}"></p>
-        </div>
-        <div class="form-group">
-            <label for="recipeQuantityInput">Add Recipe Quantity (Grams):</label>
-            <input th:field="*{recipeItemQuantity}" type="number" step="0.01" id="recipeQuantityInput" name="recipeQuantity" class="form-control"/>
-            <p class="alert-warning" th:if="${#fields.hasErrors('recipeItemQuantity')}" th:errors ="*{recipeItemQuantity}"></p>
-        </div>
-        <button type="submit" name="action" value="addRecipe" class="add-recipe-button">Add Recipe</button>
-        <a th:href="@{/meals}" class="save-meal-button">Save Meal</a>
-    </form>
-    <div>
+    <div class="form-container">
+        <form id="mealForm" th:action="@{'/meals/'+ ${meal.id} + '/add-recipe-items'}" th:method="PUT" th:object="${addRecipeItemRequest}">
+            <div class="form-group">
+                <label for="recipeSelect">Select Recipe:</label>
+                <select id="recipeSelect" name="recipeName" class="form-control" th:field="*{recipeItemName}">
+                    <option value="">Select recipe:</option>
+                    <option th:each="recipe : ${myRecipes}" th:value="${recipe.name}" th:text="${recipe.name}"></option>
+                </select>
+                <p class="alert-warning" th:if="${#fields.hasErrors('recipeItemName')}" th:errors ="*{recipeItemName}"></p>
+            </div>
+            <div class="form-group">
+                <label for="recipeQuantityInput">Add Recipe Quantity (Grams):</label>
+                <input type="number" step="0.01" id="recipeQuantityInput" name="recipeQuantity" class="form-control" th:field="*{recipeItemQuantity}"/>
+                <p class="alert-warning" th:if="${#fields.hasErrors('recipeItemQuantity')}" th:errors ="*{recipeItemQuantity}"></p>
+            </div>
+            <button type="submit" name="action" value="addRecipe" class="add-recipe-button">Add Recipe</button>
+            <a th:href="@{/meals}" class="save-meal-button">Save Meal</a>
+        </form>
+    </div>
+
+    <div class="recipe-items-container">
         <h2>Added Recipe Items:</h2>
         <p th:if="${meal.myRecipeItems == null || meal.myRecipeItems.isEmpty()}">No recipe items added.</p>
         <table th:if="${#lists.size(meal.myRecipeItems) > 0}">

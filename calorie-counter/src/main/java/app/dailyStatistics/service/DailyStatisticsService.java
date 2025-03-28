@@ -29,15 +29,13 @@ public class DailyStatisticsService {
     private final DailyStatisticsRepository dailyStatisticsRepository;
     private final UserService userService;
     private final ApplicationEventPublisher eventPublisher;
-    private final ConsumedCaloriesTrackingService consumedCaloriesTrackingService;
 
 
     @Autowired
-    public DailyStatisticsService(DailyStatisticsRepository dailyStatisticsRepository, UserService userService, ApplicationEventPublisher eventPublisher, ConsumedCaloriesTrackingService consumedCaloriesTrackingService) {
+    public DailyStatisticsService(DailyStatisticsRepository dailyStatisticsRepository, UserService userService, ApplicationEventPublisher eventPublisher) {
         this.dailyStatisticsRepository = dailyStatisticsRepository;
         this.userService = userService;
         this.eventPublisher = eventPublisher;
-        this.consumedCaloriesTrackingService = consumedCaloriesTrackingService;
     }
 
     public void calculateCalorieGoalAndCaloriesAtRest(CalculateCalorieRequest calculateCalorieRequest, UUID userId) {

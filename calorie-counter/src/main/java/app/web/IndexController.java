@@ -54,14 +54,12 @@ public class IndexController {
 
 
     @PostMapping("/register")
-    public String processRegisterRequest(@Valid RegisterRequest registerRequest, BindingResult bindingResult, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
+    public ModelAndView processRegisterRequest(@Valid RegisterRequest registerRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "register";
+            return new ModelAndView("register");
         }
         userService.register(registerRequest);
-        mealService.createMealsForTheDay(authenticationDetails.getUserId());
-        dailyStatisticsService.createDailyStatistics(authenticationDetails.getUserId());
-        return "redirect:/login";
+        return  new ModelAndView("redirect:/login");
     }
 
 

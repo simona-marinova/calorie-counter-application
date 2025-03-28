@@ -63,7 +63,7 @@ public class FoodService {
     public void editFoodDetails(UUID id, FoodEditRequest foodEditRequest) {
         Food food = getById(id);
         food.setName(foodEditRequest.getName());
-        food.setCaloriesPerHundredGrams(foodEditRequest.getCaloriesPerHundredGrams());
+        food.setCaloriesPerHundredGrams(Math.round((foodEditRequest.getCaloriesPerHundredGrams()) * 100.0) / 100.0);
         food.setPicture(foodEditRequest.getPicture());
 
         foodRepository.save(food);
@@ -88,7 +88,7 @@ public class FoodService {
         foodItem.setQuantityInGrams(addFoodItemRequest.getFoodItemQuantity());
         double foodCalories = getFoodCalories(userId, addFoodItemRequest.getFoodItemName());
         double foodItemCalories = foodCalories / 100 * addFoodItemRequest.getFoodItemQuantity();
-        foodItem.setCalories(foodItemCalories);
+        foodItem.setCalories(Math.round((foodItemCalories) * 100.0) / 100.0);
         User user = userService.getById(userId);
         foodItem.setUser(user);
         foodItem.setMeal(meal);
@@ -111,7 +111,7 @@ public class FoodService {
         foodItem.setQuantityInGrams(addFoodItemRequest.getFoodItemQuantity());
         double foodCalories = getFoodCalories(userId, addFoodItemRequest.getFoodItemName());
         double foodItemCalories = foodCalories / 100 * addFoodItemRequest.getFoodItemQuantity();
-        foodItem.setCalories(foodItemCalories);
+        foodItem.setCalories(Math.round((foodItemCalories) * 100.0) / 100.0);
         User user = userService.getById(userId);
         foodItem.setUser(user);
         foodItem.setMyRecipe(myRecipe);

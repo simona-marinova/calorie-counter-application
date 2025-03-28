@@ -12,11 +12,13 @@ import app.user.service.UserService;
 import app.web.dto.CalculateCalorieRequest;
 import app.web.dto.CaloriesBurnedRequest;
 import app.web.dto.CurrentWeightRequest;
+import app.web.dto.DailyCalorieGoalExceededEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,6 +37,8 @@ public class DailyStatisticsUTest {
     private DailyStatisticsRepository dailyStatisticsRepository;
     @Mock
     private UserService userService;
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     @InjectMocks
     private DailyStatisticsService dailyStatisticsService;
@@ -185,7 +189,7 @@ public class DailyStatisticsUTest {
     }
 
     @Test
-    public void updateConsumedAndRemainingCalories_whenNegativeRemainingCalories() {
+    public void updateConsumedAndRemainingCalories_whenNegativeRemainingCaloriesAndNEventIsNotPublished() {
         UUID userId = UUID.randomUUID();
         User user = User.builder()
                 .id(userId)
@@ -197,11 +201,56 @@ public class DailyStatisticsUTest {
                 .calorieGoal(2000.0)
                 .build();
         when(dailyStatisticsRepository.findByDateAndUserId(LocalDate.now(), userId)).thenReturn(Optional.of(statistics));
-        dailyStatisticsService.updateConsumedAndRemainingCalories(500.0, userId);
+        dailyStatisticsService.updateConsumedAndRemainingCalories(500.0, userId); // Consumed 100, total 1900
         assertEquals(2300.0, statistics.getConsumedCalories());
         assertEquals(0.0, statistics.getRemainingCalories());
         verify(dailyStatisticsRepository, times(1)).save(statistics);
+        verify(eventPublisher, never()).publishEvent(any());
     }
+
+
+    @Test
+    public void updateConsumedAndRemainingCalories_whenCaloriesAreBelowGoal_thenEventIsNotPublished() {
+        UUID userId = UUID.randomUUID();
+        User user = User.builder()
+                .id(userId)
+                .build();
+        DailyStatistics statistics = DailyStatistics.builder()
+                .user(user)
+                .date(LocalDate.now())
+                .consumedCalories(1800.0)
+                .calorieGoal(2000.0)
+                .build();
+        when(dailyStatisticsRepository.findByDateAndUserId(LocalDate.now(), userId)).thenReturn(Optional.of(statistics));
+        dailyStatisticsService.updateConsumedAndRemainingCalories(100.0, userId); // Consumed 100, total 1900
+        assertEquals(1900.0, statistics.getConsumedCalories());
+        assertEquals(100.0, statistics.getRemainingCalories());
+        verify(dailyStatisticsRepository, times(1)).save(statistics);
+        verify(eventPublisher, never()).publishEvent(any());
+    }
+
+
+
+    @Test
+    public void updateConsumedAndRemainingCalories_whenCaloriesExceedGoal_thenEventIsPublished() {
+        UUID userId = UUID.randomUUID();
+        User user = User.builder()
+                .id(userId)
+                .build();
+        DailyStatistics statistics = DailyStatistics.builder()
+                .user(user)
+                .date(LocalDate.now())
+                .consumedCalories(1800.0)
+                .calorieGoal(2000.0)
+                .build();
+        when(dailyStatisticsRepository.findByDateAndUserId(LocalDate.now(), userId)).thenReturn(Optional.of(statistics));
+        dailyStatisticsService.updateConsumedAndRemainingCalories(500.0, userId); // Consumed 500, total 2300
+        assertEquals(2300.0, statistics.getConsumedCalories());
+        assertEquals(0.0, statistics.getRemainingCalories());
+        verify(dailyStatisticsRepository, times(1)).save(statistics);
+        verify(eventPublisher, times(1)).publishEvent(any(DailyCalorieGoalExceededEvent.class)); //  event is published
+    }
+
 
     @Test
     public void updateConsumedAndRemainingCalories_whenRounding() {
@@ -222,24 +271,6 @@ public class DailyStatisticsUTest {
         verify(dailyStatisticsRepository, times(1)).save(statistics);
     }
 
-    @Test
-    public void updateConsumedAndRemainingCalories__whenCaloriesRemainingBelowZero_thenCaloriesRemainingZero() {
-        UUID userId = UUID.randomUUID();
-        User user = User.builder()
-                .id(userId)
-                .build();
-        DailyStatistics statistics = DailyStatistics.builder()
-                .user(user)
-                .date(LocalDate.now())
-                .consumedCalories(1800.0)
-                .calorieGoal(2000.0)
-                .build();
-        when(dailyStatisticsRepository.findByDateAndUserId(LocalDate.now(), userId)).thenReturn(Optional.of(statistics));
-        dailyStatisticsService.updateConsumedAndRemainingCalories(500.0, userId);
-        assertEquals(2300.0, statistics.getConsumedCalories());
-        assertEquals(0.0, statistics.getRemainingCalories());
-        verify(dailyStatisticsRepository, times(1)).save(statistics);
-    }
 
     @Test
     public void lowerCaloriesConsumed_whenZeroCaloriesReduction() {
