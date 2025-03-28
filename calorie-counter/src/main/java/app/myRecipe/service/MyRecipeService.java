@@ -133,7 +133,8 @@ public class MyRecipeService {
     public void removeFoodItemFromRecipe(UUID id, UUID foodItemId) {
         MyRecipe myRecipe = getById(id);
         FoodItem foodItem = foodService.getFoodItemById(foodItemId);
-        myRecipe.setTotalCalories(myRecipe.getTotalCalories() - foodItem.getCalories());
+        myRecipe.setTotalCalories(Math.round((myRecipe.getTotalCalories() - foodItem.getCalories())* 100.0) / 100.0);
+        myRecipe.setCaloriesPerHundredGrams(calculateCaloriesPer100Grams(myRecipe));
         List<FoodItem> foodItems = foodService.getFoodItemsByRecipeId(id);
         foodItems.remove(foodItem);
         foodService.deleteFoodItemById(foodItemId);

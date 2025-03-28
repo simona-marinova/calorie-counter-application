@@ -30,7 +30,7 @@
         </div>
         <button type="submit" name="action" value="addFood" class="add-food-button">Add Food</button>
         <a th:href="@{/my-recipes}" class="save-recipe-button">Save Recipe</a> </form>
-    <div>
+    <div class="food-items-container">
         <h2>Added Food Items:</h2>
         <p th:if="${myRecipe.foodItems == null || myRecipe.foodItems.isEmpty()}">No food items added.</p>
         <table th:if="${#lists.size(myRecipe.foodItems) > 0}">
