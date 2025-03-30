@@ -85,6 +85,7 @@ public class DailyStatisticsService {
         DailyStatistics dailyStatistics = getDailyStatisticsByDateAndUserId(LocalDate.now(), userId);
         dailyStatistics.setCalorieGoal(Math.round(dailyCalorieGoal * 100.0) / 100.0);
         dailyStatistics.setBurnedCaloriesAtRest(Math.round(basalMetabolicRate * 100.0) / 100.0);
+        userService.updateUserGender(userId, calculateCalorieRequest.getGender());
         dailyStatisticsRepository.save(dailyStatistics);
     }
 

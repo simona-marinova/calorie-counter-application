@@ -113,6 +113,13 @@ public class UserService implements UserDetailsService {
 
     }
 
+    public void updateUserGender (UUID userId, Gender gender) {
+        User user = getById(userId);
+        user.setGender(gender);
+        user.setUpdatedOn(LocalDateTime.now());
+        userRepository.save(user);
+    }
+
     public User getById(UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new DomainException("User with id [%s] does not exist.".formatted(id)));
     }
