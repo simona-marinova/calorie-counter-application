@@ -3,13 +3,16 @@ package app.web;
 import app.activity.client.dto.ActivityResponse;
 import app.activity.service.ActivityService;
 import app.dailyStatistics.service.DailyStatisticsService;
+import app.food.model.Food;
 import app.security.AuthenticationDetails;
 import app.user.model.User;
 import app.user.service.UserService;
 import app.web.dto.CaloriesBurnedRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +36,7 @@ public class ActivityController {
     }
 
     @GetMapping("/new")
-    public ModelAndView getCaloriesBurnedPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails, CaloriesBurnedRequest caloriesBurnedRequest) {
+    public ModelAndView getCaloriesBurnedPage(@AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
         User user = userService.getById(authenticationDetails.getUserId());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-activity");
@@ -43,8 +46,15 @@ public class ActivityController {
     }
 
     @PostMapping("/new")
-    public ModelAndView createActivity(CaloriesBurnedRequest caloriesBurnedRequest, @AuthenticationPrincipal AuthenticationDetails authenticationDetails) {
-
+    public ModelAndView createActivity(@AuthenticationPrincipal AuthenticationDetails authenticationDetails,  @Valid CaloriesBurnedRequest caloriesBurnedRequest, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            User user = userService.getById(authenticationDetails.getUserId());
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("add-activity");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("caloriesBurnedRequest", caloriesBurnedRequest);
+            return modelAndView;
+        }
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-activity");
         modelAndView.addObject("caloriesBurnedRequest", caloriesBurnedRequest);
