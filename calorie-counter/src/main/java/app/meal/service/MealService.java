@@ -54,7 +54,7 @@ public class MealService {
         meal.setFoodItems(foodItems);
         foodCalories = foodItem.getCalories();
 
-        meal.setCalories(meal.getCalories() + foodCalories);
+        meal.setCalories(Math.round((meal.getCalories() + foodCalories) * 100.0) / 100.0);
         dailyStatisticsService.updateConsumedAndRemainingCalories(foodCalories, userId);
 
         mealRepository.save(meal);
