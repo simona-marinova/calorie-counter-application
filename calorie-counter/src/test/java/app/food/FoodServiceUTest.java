@@ -58,10 +58,10 @@ public class FoodServiceUTest {
         List<Food> foods = new ArrayList<>();
         foods.add(food);
         foods.add(foodTwo);
-        when(foodRepository.findAllByUserId(user.getId())).thenReturn(foods);
+        when(foodRepository.findAllByUserIdOrderByName(user.getId())).thenReturn(foods);
         List<Food> result = foodService.getListOfAllFoodsForUserId(user.getId());
         assertEquals(foods, result);
-        verify(foodRepository, times(1)).findAllByUserId(user.getId());
+        verify(foodRepository, times(1)).findAllByUserIdOrderByName(user.getId());
     }
 
     @Test
@@ -69,10 +69,10 @@ public class FoodServiceUTest {
         User user = User.builder()
                 .id(UUID.randomUUID())
                 .build();
-        when(foodRepository.findAllByUserId(user.getId())).thenReturn(List.of());
+        when(foodRepository.findAllByUserIdOrderByName(user.getId())).thenReturn(List.of());
         List<Food> result = foodService.getListOfAllFoodsForUserId(user.getId());
         assertTrue(result.isEmpty());
-        verify(foodRepository, times(1)).findAllByUserId(user.getId());
+        verify(foodRepository, times(1)).findAllByUserIdOrderByName(user.getId());
     }
 
     @Test

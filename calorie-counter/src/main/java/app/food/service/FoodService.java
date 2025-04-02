@@ -37,7 +37,7 @@ public class FoodService {
     }
 
     public List<Food> getListOfAllFoodsForUserId(UUID userId) {
-        return foodRepository.findAllByUserId(userId);
+        return foodRepository.findAllByUserIdOrderByName(userId);
     }
 
     public void createNewFood(CreateFoodRequest createFoodRequest, UUID userId) {

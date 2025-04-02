@@ -13,7 +13,7 @@ public interface FoodRepository extends JpaRepository<Food, UUID> {
 
    Optional<Food> findByUserIdAndName(UUID userId, String name);
 
-   List<Food> findAllByUserId(UUID userId);
+   List<Food> findAllByUserIdOrderByName(UUID userId);
 
    List<Food> findByUserIdAndNameContainingIgnoreCase(UUID userId, String keyword);
 }
