@@ -8,9 +8,11 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background-image: url('https://previews.123rf.com/images/latkun/latkun2103/latkun210300879/166065015-top-view-christmas-dinner-with-turkey-resolution-and-high-quality-beautiful-photo.jpg');
-    background-size: cover;
+    background-size: auto;
     background-position: center;
+    background-repeat: repeat;
 }
+
 main {
     padding: 2rem;
     flex: 1;
