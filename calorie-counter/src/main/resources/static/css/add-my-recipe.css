@@ -1,5 +1,5 @@
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: sans-serif;
     margin: 0;
     padding: 0;
     background-color: #FFC0CB;
@@ -7,13 +7,29 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-image: url('https://www.wildfrontierstravel.com/media/cache/page_image_large/upload/cc/2364a0d7/dreamstimemaximum_197215327.jpeg');
+    background-size: 90% auto;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 
 main {
     padding: 2rem;
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+form {
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 320px;
+}
+
 
 .form-group {
     margin-bottom: 1rem;
@@ -63,4 +79,8 @@ select.form-control {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+button:hover {
+    background-color: #82B12F;
 }

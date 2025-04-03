@@ -7,7 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: url('https://previews.123rf.com/images/latkun/latkun2103/latkun210300879/166065015-top-view-christmas-dinner-with-turkey-resolution-and-high-quality-beautiful-photo.jpg');
+    background-image: url('https://img.freepik.com/free-photo/top-view-delicious-cooked-vegetables-sliced-with-greens-seasonings-dark-background-soup-meal-food-sauce_140725-85847.jpg');
     background-size: auto;
     background-position: center;
     background-repeat: repeat;
@@ -139,6 +139,7 @@ a {
     display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
+    font-weight: bold;
 }
 
 header {

@@ -7,7 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: url('https://previews.123rf.com/images/latkun/latkun2103/latkun210300879/166065015-top-view-christmas-dinner-with-turkey-resolution-and-high-quality-beautiful-photo.jpg');
+    background-image: url('https://media.istockphoto.com/id/861188910/photo/different-types-of-food-on-rustic-wooden-table.jpg?s=612x612&w=0&k=20&c=15wnishfgfmfC4nFeKtI8NXVh5sm57BVVnOlAv31ttY=');
     background-size: auto;
     background-position: center;
     background-repeat: repeat;
@@ -74,19 +74,6 @@ a{
 }
 
 
-.add-food-button{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    padding: 10px 20px;
-    background-color: #FFC0CB;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 16px;
-
-}
-
 
 .delete-button{
     display: inline-block;
@@ -132,6 +119,7 @@ a{
     display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
+    font-weight: bold;
 
 }
 
