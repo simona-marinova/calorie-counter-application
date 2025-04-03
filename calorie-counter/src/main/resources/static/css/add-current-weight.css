@@ -53,3 +53,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+
+button:hover {
+    background-color: #82B12F;
+}

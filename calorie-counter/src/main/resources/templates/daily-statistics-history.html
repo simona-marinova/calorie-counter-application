@@ -24,8 +24,9 @@
                 <tr>
                     <th>Date</th>
                     <th>Calorie Goal</th>
-                    <th>Calories Consumed</th>
-                    <th>Calories Burned</th>
+                    <th>Consumed Calories</th>
+                    <th>Burned Calories From Activity</th>
+                    <th>Burned Calories From Rest</th>
                     <th>Weight</th>
                 </tr>
                 </thead>
@@ -35,6 +36,7 @@
                     <td th:text ="${dailyStatistics.calorieGoal == 0 ? '-' : dailyStatistics.calorieGoal}"></td>
                     <td th:text ="${dailyStatistics.consumedCalories == 0 ? '-' : dailyStatistics.consumedCalories}"></td>
                     <td th:text ="${dailyStatistics.burnedCaloriesDuringActivity== 0 ? '-' : dailyStatistics.burnedCaloriesDuringActivity}"></td>
+                    <td th:text ="${dailyStatistics.burnedCaloriesDuringActivity== 0 ? '-' : dailyStatistics.burnedCaloriesAtRest}"></td>
                     <td th:text ="${dailyStatistics.weight == 0 ? '-' : dailyStatistics.weight}"></td>
                 </tr>
                 </tbody>
