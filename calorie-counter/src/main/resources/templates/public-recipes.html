@@ -16,7 +16,8 @@
     <div class="recipes-container">
         <div th:each="recipe : ${publicRecipes}" class="recipe-item">
             <h2><span th:text="${recipe.name}"></span></h2>
-            <img th:if="${recipe.picture != null and !recipe.picture.isEmpty()}" th:src="${recipe.picture}" alt="Recipe Picture" class="recipe-picture">
+            <img th:src="${recipe.picture != null && !recipe.picture.isEmpty() ? recipe.picture : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHU5IOHaS1RH4p8yIgftJM40ylOXh_0eLTIA&s'}"
+                 alt="Recipe Picture" class="recipe-image">
             <p>Calories per 100 grams: <span th:text="${recipe.caloriesPerHundredGrams}"></span></p>
             <p>All Calories: <span th:text="${recipe.getTotalCalories}"></span></p>
             <p>Instructions: <span th:text="${recipe.instructions}"></span></p>

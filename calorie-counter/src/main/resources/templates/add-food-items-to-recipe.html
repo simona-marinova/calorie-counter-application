@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Food Items To Recipe</title>
-    <link rel="stylesheet" href="/css/add-food-and-recipe-items.css">
+    <link rel="stylesheet" href="/css/add-food-items.css">
     <link rel="stylesheet" type="text/css" href="/css/common.css">
 </head>
 <body>
@@ -13,23 +13,27 @@
     <h1>Add Food Items To Recipe</h1>
 </header>
 <main>
-    <form id="recipeForm" th:action="@{'/my-recipes/'+ ${myRecipe.id} + '/add-food-items'}" th:method="PUT" th:object="${addFoodItemRequest}">
-    <div class="form-group">
-            <label for="foodSelect">Select Food:</label>
-            <select th:field="*{foodItemName}" id="foodSelect" name="foodName" class="form-control">
-                <option value="">Select food</option> <option th:each="food : ${foods}" th:value="${food.name}" th:text="${food.name}"></option>
-            </select>
-        <p class="alert-warning" th:if="${#fields.hasErrors('foodItemName')}" th:errors ="*{foodItemName}"></p>
+    <div class="form-container">
+        <form id="recipeForm" th:action="@{'/my-recipes/'+ ${myRecipe.id} + '/add-food-items'}" th:method="PUT" th:object="${addFoodItemRequest}">
+            <div class="form-group">
+                <label for="foodSelect">Select Food:</label>
+                <select th:field="*{foodItemName}" id="foodSelect" name="foodName" class="form-control">
+                    <option value="">Select food</option>
+                    <option th:each="food : ${foods}" th:value="${food.name}" th:text="${food.name}"></option>
+                </select>
+                <p class="alert-warning" th:if="${#fields.hasErrors('foodItemName')}" th:errors="*{foodItemName}"></p>
 
+            </div>
+            <div class="form-group">
+                <label for="foodQuantityInput">Add Food Quantity (Grams):</label>
+                <input th:field="*{foodItemQuantity}" type="number" step="0.01" id="foodQuantityInput" name="foodQuantity" class="form-control" />
+                <p class="alert-warning" th:if="${#fields.hasErrors('foodItemQuantity')}" th:errors="*{foodItemQuantity}"></p>
+                <p class="alert-warning" th:text="${thisFoodItemAlreadyExists}"></p>
+            </div>
+            <button type="submit" name="action" value="addFood" class="add-food-button">Add Food</button>
+            <a th:href="@{/my-recipes}" class="save-recipe-button">Save Recipe</a>
+        </form>
     </div>
-        <div class="form-group">
-            <label for="foodQuantityInput">Add Food Quantity (Grams):</label>
-            <input  th:field="*{foodItemQuantity}" type="number" step="0.01" id="foodQuantityInput" name="foodQuantity" class="form-control"/>
-            <p class="alert-warning" th:if="${#fields.hasErrors('foodItemQuantity')}" th:errors ="*{foodItemQuantity}"></p>
-            <p class="alert-warning" th:text="${thisFoodItemAlreadyExists}"></p>
-        </div>
-        <button type="submit" name="action" value="addFood" class="add-food-button">Add Food</button>
-        <a th:href="@{/my-recipes}" class="save-recipe-button">Save Recipe</a> </form>
     <div class="food-items-container">
         <h2>Added Food Items:</h2>
         <p th:if="${myRecipe.foodItems == null || myRecipe.foodItems.isEmpty()}">No food items added.</p>
